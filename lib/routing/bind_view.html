@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!-- copyright notice -->
+
+<link rel='import' href='../../../packages/polymer/polymer.html'>
+
+<polymer-element name='bind-view'>
+  <template>
+    <style>
+      :host {
+        display: inline;
+      }
+    </style>
+    <!--<div>(bind view)</div>-->
+    <content id="content"></content>
+    <template if="false">{{bindingParameters}}</template>
+  </template>
+  <script type='application/dart' src='bind_view.dart'></script>
+</polymer-element>

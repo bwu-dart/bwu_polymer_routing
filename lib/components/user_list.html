@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- copyright notice -->
+
+<link rel='import' href='../../../packages/polymer/polymer.html'>
+
+<polymer-element name='user-list'>
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px #aaf;
+        margin: 2px;
+      }
+    </style>
+
+    <h3>user-list</h3>
+
+    <ul>
+      <template repeat='{{user in users}}'>
+        <li><a _href='#/user/{{user}}/articles'>{{user}}</a></li>
+      </template>
+    </ul>
+    <content></content>
+  </template>
+  <script type='application/dart' src='user_list.dart'></script>
+</polymer-element>

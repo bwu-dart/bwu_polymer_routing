@@ -1,0 +1,18 @@
+name: bwu_polymer_routing_example
+version: 0.0.1
+author: Günter Zöchbauer <guenter@gzoechbauer.com>
+description: Try route_hierarchical with Polymer
+environment:
+  sdk: '>=1.6.0-0'
+dependencies:
+  polymer: '>=0.12.0+7 <0.13.0'
+  route_hierarchical: '>=0.4.21 <0.5.0'
+  di: '>=2.0.1 <2.1.0'
+dependency_overrides:
+  code_transformers: '>=0.2.0 <0.3.0'
+transformers:
+- polymer:
+    entry_points:
+    - web/index.html
+
+- di/module_transformer

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!-- copyright notice -->
+
+<link rel='import' href='../../../packages/polymer/polymer.html'>
+
+<polymer-element name='article-element'>
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px green;
+        margin: 2px;
+      }
+    </style>
+
+    <a _href="#/user/{{userId}}/articles">articles</a>
+
+    <h3>article-element</h3>
+    <div>{{articleId}}</div>
+    <content></content>
+  </template>
+  <script type='application/dart' src='article_element.dart'></script>
+</polymer-element>
