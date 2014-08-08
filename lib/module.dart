@@ -128,7 +128,6 @@ import 'dart:html' as dom;
 import 'package:di/di.dart' as di;
 import 'package:di/annotations.dart' show Injectable, Injectables;
 import 'package:route_hierarchical/client.dart' as rt;
-import 'package:di/src/reflector_dynamic.dart';
 
 import 'static_keys.dart';
 import 'bind_view.dart';
@@ -138,8 +137,7 @@ part 'src/routing.dart';
 part 'src/route_provider.dart';
 
 class RoutingModule extends di.Module {
-  // TODO(zoechi) why is this `.withReflector(new DynamicTypeFactories())` necessary?
-  RoutingModule({bool usePushState: true}) : super.withReflector(new DynamicTypeFactories()){
+  RoutingModule({bool usePushState: true}) : super() {
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(usePushState == true));
     bind(rt.Router, toFactory: (NgRoutingUsePushState state, dom.Window window) {
       var useFragment = !state.usePushState;

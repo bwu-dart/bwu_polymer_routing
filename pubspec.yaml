@@ -15,4 +15,6 @@ transformers:
 - polymer:
     entry_points:
     - example/index.html
-- di/module_transformer
+- di:
+    injected_types:
+#    - route.client.Route
