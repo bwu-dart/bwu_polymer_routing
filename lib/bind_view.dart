@@ -95,6 +95,7 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
 
   void _createParameterBindings(View viewDef) {
     if(parameters != null) {
+      try {
       if(viewDef.bindParameters != null) {
         viewDef.bindParameters.forEach((k) {
           //print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
@@ -107,6 +108,10 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
           _dynamicBindings.add((_viewElement as PolymerElement)
             .bindProperty(new Symbol(k), new PathObserver(this, 'parameters.${k}')));
         });
+      }
+      } catch (e, s) {
+        print('$e\n$s');
+        print('Use routeCfg "bindParameters" option to limit the parameters bound to the view element.');
       }
     }
   }

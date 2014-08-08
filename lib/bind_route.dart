@@ -9,5 +9,8 @@ class BindRoute extends PolymerElement {
   @override
   void attached() {
     super.attached();
+    var error = '<bind-route> is not yet implemented.';
+    print(error);
+    throw error;
   }
 }
