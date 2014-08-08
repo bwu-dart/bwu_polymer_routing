@@ -1,8 +1,5 @@
-/*if( playground == 'core_elements' ) <!-- copyright notice core-elements -->*/
+library bwu_polymer_router.example.user_list;
 
-library playground.user_list;
-
-import 'dart:html' as dom;
 import 'package:polymer/polymer.dart';
 
 @CustomTag('user-list')

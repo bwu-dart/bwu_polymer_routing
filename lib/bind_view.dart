@@ -1,12 +1,10 @@
-/*if( playground == 'core_elements' ) <!-- copyright notice core-elements -->*/
-
-library bwu_polymer_routing_example.components.bind_view;
+library bwu_polymer_routing.bind_view;
 
 import 'dart:html' as dom;
 import 'dart:async' as async;
 import 'dart:collection' as coll;
 import 'package:route_hierarchical/client.dart' as rt;
-import 'package:bwu_polymer_routing_example/routing/module.dart'
+import 'package:bwu_polymer_routing/module.dart'
   show RouteProvider, NgRoutingHelper, View, RouteHandle;
 import 'package:polymer/polymer.dart';
 import 'package:di/di.dart' show Injector, Module;

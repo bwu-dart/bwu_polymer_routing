@@ -120,29 +120,22 @@
  *            })
  *        });
  */
-library bwu_polymer_routing_example.routing;
+library bwu_polymer_routing.module;
 
 import 'dart:async' as async;
 import 'dart:html' as dom;
 
 import 'package:di/di.dart' as di;
 import 'package:di/annotations.dart' show Injectable, Injectables;
-//import 'package:angular/application.dart';
-//import 'package:angular/core/annotation_src.dart';
-//import 'package:angular/core/module_internal.dart';
-//import 'package:angular/core_dom/module_internal.dart';
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:di/src/reflector_dynamic.dart';
 
 import 'static_keys.dart';
-//import 'dart:collection' as coll;
 import 'bind_view.dart';
 //import 'bind_route.dart';
 
-part 'routing.dart';
-part 'route_provider.dart';
-//part 'ng_view.dart';
-//part 'ng_bind_route.dart';
+part 'src/routing.dart';
+part 'src/route_provider.dart';
 
 class RoutingModule extends di.Module {
   RoutingModule({bool usePushState: true}) : super.withReflector(new DynamicTypeFactories()){
@@ -153,13 +146,8 @@ class RoutingModule extends di.Module {
     }, inject: [PM_ROUTING_USE_PUSH_STATE_KEY, WINDOW_KEY]);
     bind(NgRoutingHelper);
     bind(RouteProvider, toValue: null);
-//    bind(RouteInitializer, toValue: null);
     bind(RouteInitializerFn, toValue: null);
     bind(dom.Window, toValue: dom.window);
-
-    // directives
-//    bind(/*NgView*/ BindView, toValue: null);
-//    bind(/*NgBindRoute*/ BindRoute);
   }
 }
 

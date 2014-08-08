@@ -1,19 +1,15 @@
-/*if( playground == 'core_elements' ) <!-- copyright notice core-elements -->*/
+library bwu_polymer_router.example.article_element;
 
-library playground.article_list;
-
-import 'dart:html' as dom;
 import 'dart:async' as async;
 import 'package:polymer/polymer.dart';
-import 'package:bwu_polymer_routing_example/routing/module.dart' show RouteProvider;
+import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
 
-@CustomTag('article-list')
-class ArticleList extends PolymerElement {
-  ArticleList.created() : super.created();
+@CustomTag('article-element')
+class ArticleElement extends PolymerElement {
+  ArticleElement.created() : super.created();
 
+  @published String articleId;
   @observable String userId;
-
-  var articles = ['Soap', 'Knife', 'The Dark Knight Blu-Ray', 'Wine Bordeau 0.7L'];
 
   @override
   void attached() {

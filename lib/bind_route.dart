@@ -1,8 +1,5 @@
-/*if( playground == 'core_elements' ) <!-- copyright notice core-elements -->*/
+library bwu_polymer_routing.bind_route;
 
-library bwu_polymer_routing_example.components.bind_route;
-
-import 'dart:html' as dom;
 import 'package:polymer/polymer.dart';
 
 @CustomTag('bind-route')

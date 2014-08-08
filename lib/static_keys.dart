@@ -1,13 +1,10 @@
-library bwu_polymer_routing_example.static_keys;
+library bwu_polymer_routing.static_keys;
 
 import 'dart:html' as dom;
 import 'package:di/di.dart';
 import 'bind_route.dart';
 import 'bind_view.dart';
 import 'module.dart';
-//import 'package:angular/routing/module.dart';
-
-//export 'package:angular/core_dom/static_keys.dart' show WINDOW_KEY, DIRECTIVE_MAP_KEY;
 
 final Key WINDOW_KEY = new Key(dom.Window);
 

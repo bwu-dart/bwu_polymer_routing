@@ -1,17 +1,14 @@
-/*if( playground == 'core_elements' ) <!-- copyright notice core-elements -->*/
-
-library playground.app_element;
+library bwu_polymer_router.example.app_element;
 
 import 'dart:html' as dom;
 import 'package:polymer/polymer.dart';
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:di/di.dart' show Module, ModuleInjector, Injector, TypeReflector;
-
-import 'package:bwu_polymer_routing_example/components/route_initializer.dart';
-import 'package:bwu_polymer_routing_example/routing/module.dart'
-    show RouteInitializerFn, RoutingModule, NgRoutingHelper, RouteProvider;
 import 'package:di/src/reflector_dynamic.dart';
-import 'package:bwu_polymer_routing_example/routing/static_keys.dart';
+import 'package:bwu_polymer_routing/module.dart'
+    show RouteInitializerFn, RoutingModule, NgRoutingHelper, RouteProvider;
+import 'package:bwu_polymer_routing/static_keys.dart';
+import 'route_initializer.dart';
 
 class RootRouteProvider implements RouteProvider {
   rt.Router _router;

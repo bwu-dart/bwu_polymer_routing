@@ -1,4 +1,4 @@
-part of bwu_polymer_routing_example.routing;
+part of bwu_polymer_routing.module;
 
 /**
  * Class that can be injected to retrieve information about the current route.

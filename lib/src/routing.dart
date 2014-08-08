@@ -1,4 +1,4 @@
-part of bwu_polymer_routing_example.routing;
+part of bwu_polymer_routing.module;
 
 /**
  * A factory of route to template bindings.
