@@ -10,7 +10,10 @@
       }
     </style>
     <content id="content"></content>
-    <template if="false">{{bindingParameters}}</template>
+
+    <!-- to make binding to `parameters` for dynamically added views work -->
+    <template if="false">{{parameters}}</template>
+
   </template>
   <script type='application/dart' src='bind_view.dart'></script>
 </polymer-element>

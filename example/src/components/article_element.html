@@ -12,10 +12,13 @@
       }
     </style>
 
-    <a _href="#/user/{{userId}}/articles">articles</a>
+    <div>&lt; <a _href="#/user/{{userId}}/articles">articles</a></div>
+    <div><button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button></div>
 
     <h3>article-element</h3>
-    <div>{{articleId}}</div>
+    <div>isEditMode: {{isEditMode}}</div>
+    <div>articleId: {{articleId}}</div>
+    <div>userId: {{userId}}</div>
     <content></content>
   </template>
   <script type='application/dart' src='article_element.dart'></script>

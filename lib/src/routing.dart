@@ -4,7 +4,7 @@ part of bwu_polymer_routing.module;
  * A factory of route to template bindings.
  */
 class RouteViewFactory {
-  NgRoutingHelper locationService;
+  RoutingHelper locationService;
 
   RouteViewFactory(this.locationService);
 
@@ -12,16 +12,16 @@ class RouteViewFactory {
       (rt.RouteEnterEvent event) => _enterHandler(event, templateUrl);
 
   void _enterHandler(rt.RouteEnterEvent event, String templateUrl,
-                     {List<di.Module> modules, String templateHtml}) {
+                     {List<di.Module> modules, List<String> bindParameters}) {
     locationService._route(event.route, templateUrl, fromEvent: true,
-        modules: modules, templateHtml: templateHtml);
+        modules: modules, bindParameters: bindParameters);
   }
 
-  void configure(Map<String, NgRouteCfg> config) {
+  void configure(Map<String, RouteCfg> config) {
     _configure(locationService.router.root, config);
   }
 
-  void _configure(rt.Route route, Map<String, NgRouteCfg> config) {
+  void _configure(rt.Route route, Map<String, RouteCfg> config) {
     config.forEach((name, cfg) {
       var modulesCalled = false;
       List<di.Module> newModules;
@@ -30,9 +30,9 @@ class RouteViewFactory {
           path: cfg.path,
           defaultRoute: cfg.defaultRoute,
           enter: (rt.RouteEnterEvent e) {
-            if (cfg.view != null /*|| cfg.viewHtml != null*/) {
+            if (cfg.view != null) {
               _enterHandler(e, cfg.view,
-                  modules: newModules/*, templateHtml: cfg.viewHtml*/);
+                  modules: newModules, bindParameters: cfg.bindParameters);
             }
             if (cfg.enter != null) {
               cfg.enter(e);
@@ -70,28 +70,28 @@ class RouteViewFactory {
   }
 }
 
-NgRouteCfg ngRoute({String path, String view, /*String viewHtml,*/
-    Map<String, NgRouteCfg> mount, modules(), bool defaultRoute: false,
+RouteCfg routeCfg({String path, String view,
+    Map<String, RouteCfg> mount, modules(), bool defaultRoute: false,
     rt.RoutePreEnterEventHandler preEnter, rt.RouteEnterEventHandler enter,
-    rt.RoutePreLeaveEventHandler preLeave, rt.RouteLeaveEventHandler leave}) =>
-        new NgRouteCfg(path: path, view: view, /*viewHtml: viewHtml,*/ mount: mount,
+    rt.RoutePreLeaveEventHandler preLeave, rt.RouteLeaveEventHandler leave, List<String> bindParameters}) =>
+        new RouteCfg(path: path, view: view, mount: mount,
             modules: modules, defaultRoute: defaultRoute, preEnter: preEnter,
-            preLeave: preLeave, enter: enter, leave: leave);
+            preLeave: preLeave, enter: enter, leave: leave, bindParameters: bindParameters);
 
-class NgRouteCfg {
+class RouteCfg {
   final String path;
   final String view;
-//  final String viewHtml;
-  final Map<String, NgRouteCfg> mount;
+  final Map<String, RouteCfg> mount;
   final Function modules;
   final bool defaultRoute;
   final rt.RouteEnterEventHandler enter;
   final rt.RoutePreEnterEventHandler preEnter;
   final rt.RoutePreLeaveEventHandler preLeave;
   final rt.RouteLeaveEventHandler leave;
+  final List<String> bindParameters;
 
-  NgRouteCfg({this.view, /*this.viewHtml,*/ this.path, this.mount, this.modules,
-      this.defaultRoute, this.enter, this.preEnter, this.preLeave, this.leave});
+  RouteCfg({this.view, this.path, this.mount, this.modules, this.defaultRoute,
+      this.enter, this.preEnter, this.preLeave, this.leave, this.bindParameters});
 }
 
 
@@ -109,13 +109,12 @@ typedef void RouteInitializerFn(rt.Router router, RouteViewFactory viewFactory);
  * events and view registries.
  */
 @Injectable()
-class NgRoutingHelper {
+class RoutingHelper {
   final rt.Router router;
-//  final Application _ngApp;
-  final _portals = </*NgView*/BindView>[];
+  final _portals = <BindView>[];
   final _templates = <String, View>{};
 
-  NgRoutingHelper(di.Injector injector, this.router /*,
+  RoutingHelper(di.Injector injector, this.router /*,
                   this._ngApp*/) {
     // TODO: move this to constructor parameters when di issue is fixed:
     // https://github.com/angular/di.dart/issues/40
@@ -162,16 +161,15 @@ class NgRoutingHelper {
     }
   }
 
-  void _route(rt.Route route, String template, {bool fromEvent, List<di.Module> modules,
-      String templateHtml}) {
-    _templates[_routePath(route)] = new View(template, modules);
+  void _route(rt.Route route, String template, {bool fromEvent, List<di.Module> modules, List<String> bindParameters}) {
+    _templates[_routePath(route)] = new View(template, modules, bindParameters);
   }
 
-  void registerPortal(/*NgView*/ BindView ngView) {
+  void registerPortal(BindView ngView) {
     _portals.add(ngView);
   }
 
-  void unregisterPortal(/*NgView*/ BindView ngView) {
+  void unregisterPortal(BindView ngView) {
     _portals.remove(ngView);
   }
 }
@@ -179,8 +177,9 @@ class NgRoutingHelper {
 class View {
   final String template;
   final List<di.Module> modules;
+  final List<String> bindParameters;
 
-  View(this.template, this.modules);
+  View(this.template, this.modules, this.bindParameters);
 }
 
 String _routePath(rt.Route route) {

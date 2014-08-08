@@ -13,4 +13,4 @@ Key PM_ROUTING_USE_PUSH_STATE_KEY = new Key(NgRoutingUsePushState);
 Key PM_VIEW_KEY = new Key(BindView);
 Key ROUTE_PROVIDER_KEY = new Key(RouteProvider);
 Key ROUTE_INITIALIZER_FN_KEY = new Key(RouteInitializerFn);
-Key PM_ROUTING_HELPER_KEY = new Key(NgRoutingHelper);
+Key PM_ROUTING_HELPER_KEY = new Key(RoutingHelper);

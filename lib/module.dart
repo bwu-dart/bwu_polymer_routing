@@ -138,13 +138,14 @@ part 'src/routing.dart';
 part 'src/route_provider.dart';
 
 class RoutingModule extends di.Module {
+  // TODO(zoechi) why is this `.withReflector(new DynamicTypeFactories())` necessary?
   RoutingModule({bool usePushState: true}) : super.withReflector(new DynamicTypeFactories()){
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(usePushState == true));
     bind(rt.Router, toFactory: (NgRoutingUsePushState state, dom.Window window) {
       var useFragment = !state.usePushState;
       return new rt.Router(useFragment: useFragment, windowImpl: window);
     }, inject: [PM_ROUTING_USE_PUSH_STATE_KEY, WINDOW_KEY]);
-    bind(NgRoutingHelper);
+    bind(RoutingHelper);
     bind(RouteProvider, toValue: null);
     bind(RouteInitializerFn, toValue: null);
     bind(dom.Window, toValue: dom.window);

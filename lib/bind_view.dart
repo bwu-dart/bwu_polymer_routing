@@ -5,16 +5,16 @@ import 'dart:async' as async;
 import 'dart:collection' as coll;
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:bwu_polymer_routing/module.dart'
-  show RouteProvider, NgRoutingHelper, View, RouteHandle;
+  show RouteProvider, RoutingHelper, View, RouteHandle;
 import 'package:polymer/polymer.dart';
-import 'package:di/di.dart' show Injector, Module;
+import 'package:di/di.dart' show Injector, Module, ModuleInjector;
 
 
 @CustomTag('bind-view')
 class BindView extends PolymerElement implements RouteProvider {
   BindView.created() : super.created();
 
-  NgRoutingHelper _locationService;
+  RoutingHelper _locationService;
   rt.RouteHandle routeHandle;
   Injector _appInjector;
 
@@ -25,18 +25,21 @@ class BindView extends PolymerElement implements RouteProvider {
   void attached() {
     super.attached();
 
+    _init();
+  }
+
+  void _init() {
     new async.Future(() {
       var event = fire('polymer-di', detail: {
         rt.Router: null,
-        NgRoutingHelper: null});
+        RoutingHelper: null});
 
       if(event.defaultPrevented) {
         var di = event.detail;
         rt.Router router = di[rt.Router];
-        _locationService = di[NgRoutingHelper];
-        _appInjector = (di[Injector] as Injector)
-            .createChild([new Module()
-            ..bind(RouteProvider, toValue: this)]);
+        _locationService = di[RoutingHelper];
+        _appInjector = new ModuleInjector([new Module()
+            ..bind(RouteProvider, toValue: this)], (di[Injector] as Injector));
         RouteProvider routeProvider = (di[Injector]as Injector).get(RouteProvider);
 
         routeHandle = routeProvider != null ?
@@ -45,22 +48,25 @@ class BindView extends PolymerElement implements RouteProvider {
         _locationService.registerPortal(this);
         maybeReloadViews();
       } else {
-        print('DI error');
+        print('DI request was not handled.');
       }
 
-      $['content'].on['polymer-di'].listen((dom.CustomEvent e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        try {
-        e.detail.keys.where((k) => e.detail[k] == null).forEach((k) {
-          e.detail[k] = _appInjector.get(k);
-        });
-        } catch(e) {
-          print(e);
-        }
-        e.detail[Injector] = _appInjector;
-      });
+      _serveDiRequests();
+    });
+  }
 
+  void _serveDiRequests() {
+    $['content'].on['polymer-di'].listen((dom.CustomEvent e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      try {
+      e.detail.keys.where((k) => e.detail[k] == null).forEach((k) {
+        e.detail[k] = _appInjector.get(k);
+      });
+      } catch(e) {
+        print(e);
+      }
+      e.detail[Injector] = _appInjector;
     });
   }
 
@@ -93,24 +99,34 @@ class BindView extends PolymerElement implements RouteProvider {
 
     _cleanUp();
     _view = viewDef;
+
     //print('append: ${viewDef.template}');
     var viewElement = new dom.Element.tag(viewDef.template);
     append(viewElement);
+
     if(parameters != null) {
-      bindingParameters.keys.forEach((k) {
-        //print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
-        dynamicBindings.add((viewElement as PolymerElement)
-          .bindProperty(new Symbol(k), new PathObserver(this, 'bindingParameters.${k}')));
-      });
+      if(viewDef.bindParameters != null) {
+        viewDef.bindParameters.forEach((k) {
+          print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
+          _dynamicBindings.add((viewElement as PolymerElement)
+            .bindProperty(new Symbol(k), new PathObserver(this, 'parameters.${k}')));
+        });
+      } else {
+        parameters.keys.forEach((k) {
+          print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
+          _dynamicBindings.add((viewElement as PolymerElement)
+            .bindProperty(new Symbol(k), new PathObserver(this, 'parameters.${k}')));
+        });
+      }
     }
   }
 
-  List dynamicBindings = [];
-  Map<String, String> get bindingParameters => _viewRoute.parameters;
+  List _dynamicBindings = [];
+//  Map<String, String> get bindingParameters => _viewRoute.parameters;
 
   void _cleanUp() {
-    dynamicBindings.forEach((Bindable b) => b.close());
-    dynamicBindings.clear();
+    _dynamicBindings.forEach((Bindable b) => b.close());
+    _dynamicBindings.clear();
 
     if (_view == null) return;
     children.clear();

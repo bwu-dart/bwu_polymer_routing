@@ -7,28 +7,41 @@ class RouteInitializer implements Function {
   void call(rt.Router router, RouteViewFactory views) {
     views.configure({
 
-      'usersList': ngRoute(
+      'usersList': routeCfg(
           path: '/users',
-          view: 'user-list' /*,
-          defaultRoute: true*/),
-      'user': ngRoute(
+          view: 'user-list',
+          defaultRoute: true,
+          enter: (route) => router.go('usersList', {})),
+      'user': routeCfg(
           path: '/user/:userId',
           view: 'user-element',
           mount:{
-            'articleList': ngRoute(
+            'articleList': routeCfg(
                 path: '/articles',
-                view: 'article-list'/*,
-                defaultRoute: true*/),
-            'article': ngRoute(
+                view: 'article-list',
+                defaultRoute: true),
+            'article': routeCfg(
                 path: '/article/:articleId',
                 view: 'article-element',
+                //bindParameters: ['articleId'],
                 mount: {
-                  'view': ngRoute(
-                      path: '/view' /*,
-                      view: 'article-element',
-                      defaultRoute: true*/),
-                  'edit': ngRoute(
-                      path: '/edit')
+                  'view': routeCfg(
+                      path: '/view',
+                      defaultRoute: true /*,
+                      enter: (e) {
+                          if(!e.parameters.containsKey('isEditMode')) {
+                            router.go('view', {'isEditMode': false}..addAll(e.route.parent.parameters), startingFrom: e.route.parent);
+                          }
+                        },*/
+                      ),
+                  'edit': routeCfg(
+                      path: '/edit' /*,
+                      bindParameters: ['articleId'],
+                      enter: (e) {
+                          if(!e.parameters.containsKey('isEditMode')) {
+                            router.go('edit', {'isEditMode': true}..addAll(e.route.parent.parameters), startingFrom: e.route.parent);
+                          }
+                        }*/)
                 }
             )
           }
