@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<link rel='import' href='../../../packages/polymer/polymer.html'>
+
+<polymer-element name='article-element'>
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px green;
+        margin: 2px;
+      }
+    </style>
+
+    <div>&lt; <a _href="#/user/{{userId}}/articles">articles</a></div>
+    <div><button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button></div>
+
+    <h3>article-element</h3>
+    <div>isEditMode: {{isEditMode}}</div>
+    <div>articleId: {{articleId}}</div>
+    <div>userId: {{userId}}</div>
+    <content></content>
+  </template>
+  <script type='application/dart' src='article_element.dart'></script>
+</polymer-element>

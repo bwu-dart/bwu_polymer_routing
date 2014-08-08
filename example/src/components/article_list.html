@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<link rel='import' href='../../../packages/polymer/polymer.html'>
+
+<link rel='import' href='../../../packages/bwu_polymer_routing/bind_view.html'>
+
+<polymer-element name='article-list'>
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px #afa;
+        margin: 2px;
+      }
+    </style>
+    <h3>article-list</h3>
+
+    <ul>
+      <template repeat='{{article in articles}}'>
+        <li><a _href='#/user/{{userId}}/articles/article/{{article}}/view'>{{article}}</a></li>
+      </template>
+    </ul>
+
+    <bind-view id="article-list"></bind-view>
+    <content></content>
+  </template>
+  <script type='application/dart' src='article_list.dart'></script>
+</polymer-element>

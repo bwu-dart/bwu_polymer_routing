@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<link rel='import' href='../../../packages/polymer/polymer.html'>
+
+<link rel='import' href='../../../packages/bwu_polymer_routing/bind_view.html'>
+
+<polymer-element name='user-element'>
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px blue;
+        margin: 2px;
+      }
+    </style>
+
+    <div>&lt; <a href="#/users">users</a></div>
+
+    <h3>user-element</h3>
+
+    <div>{{userId}}</div>
+
+    <bind-view id="user_element"></bind-view>
+
+    <content></content>
+  </template>
+  <script type='application/dart' src='user_element.dart'></script>
+</polymer-element>
