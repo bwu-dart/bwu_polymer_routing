@@ -30,8 +30,13 @@ class RouteInitializer implements Function {
               bindParameters: ['articleId', 'userId'],
               dontLeaveOnParamChanges: true,
               mount: {
-            'view': routeCfg(path: '/view', defaultRoute: true),
-            'edit': routeCfg(path: '/edit')
+            'view': routeCfg(
+                path: '/view',
+                defaultRoute: true,
+                dontLeaveOnParamChanges: true),
+            'edit': routeCfg(
+                path: '/edit',
+                dontLeaveOnParamChanges: true)
           })
         })
       })
