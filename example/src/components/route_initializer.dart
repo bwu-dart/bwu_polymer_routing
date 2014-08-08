@@ -11,41 +11,30 @@ class RouteInitializer implements Function {
           path: '/users',
           view: 'user-list',
           defaultRoute: true,
+          dontLeaveOnParamChanges: true,
           enter: (route) => router.go('usersList', {})),
       'user': routeCfg(
           path: '/user/:userId',
           view: 'user-element',
-          mount:{
-            'articleList': routeCfg(
-                path: '/articles',
-                view: 'article-list',
-                defaultRoute: true),
-            'article': routeCfg(
-                path: '/article/:articleId',
-                view: 'article-element',
-                //bindParameters: ['articleId'],
-                mount: {
-                  'view': routeCfg(
-                      path: '/view',
-                      defaultRoute: true /*,
-                      enter: (e) {
-                          if(!e.parameters.containsKey('isEditMode')) {
-                            router.go('view', {'isEditMode': false}..addAll(e.route.parent.parameters), startingFrom: e.route.parent);
-                          }
-                        },*/
-                      ),
-                  'edit': routeCfg(
-                      path: '/edit' /*,
-                      bindParameters: ['articleId'],
-                      enter: (e) {
-                          if(!e.parameters.containsKey('isEditMode')) {
-                            router.go('edit', {'isEditMode': true}..addAll(e.route.parent.parameters), startingFrom: e.route.parent);
-                          }
-                        }*/)
-                }
-            )
-          }
-      )
+          dontLeaveOnParamChanges: true,
+          mount: {
+        'articleList': routeCfg(
+            path: '/articles',
+            view: 'article-list',
+            defaultRoute: true,
+            dontLeaveOnParamChanges: true,
+            mount: {
+          'article': routeCfg(
+              path: '/article/:articleId',
+              view: 'article-element',
+              bindParameters: ['articleId', 'userId'],
+              dontLeaveOnParamChanges: true,
+              mount: {
+            'view': routeCfg(path: '/view', defaultRoute: true),
+            'edit': routeCfg(path: '/edit')
+          })
+        })
+      })
     });
   }
 }

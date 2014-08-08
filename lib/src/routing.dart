@@ -26,6 +26,7 @@ class RouteViewFactory {
       var modulesCalled = false;
       List<di.Module> newModules;
       route.addRoute(
+          dontLeaveOnParamChanges: cfg.dontLeaveOnParamChanges,
           name: name,
           path: cfg.path,
           defaultRoute: cfg.defaultRoute,
@@ -73,10 +74,10 @@ class RouteViewFactory {
 RouteCfg routeCfg({String path, String view,
     Map<String, RouteCfg> mount, modules(), bool defaultRoute: false,
     rt.RoutePreEnterEventHandler preEnter, rt.RouteEnterEventHandler enter,
-    rt.RoutePreLeaveEventHandler preLeave, rt.RouteLeaveEventHandler leave, List<String> bindParameters}) =>
+    rt.RoutePreLeaveEventHandler preLeave, rt.RouteLeaveEventHandler leave, List<String> bindParameters, bool dontLeaveOnParamChanges: false}) =>
         new RouteCfg(path: path, view: view, mount: mount,
             modules: modules, defaultRoute: defaultRoute, preEnter: preEnter,
-            preLeave: preLeave, enter: enter, leave: leave, bindParameters: bindParameters);
+            preLeave: preLeave, enter: enter, leave: leave, bindParameters: bindParameters, dontLeaveOnParamChanges: dontLeaveOnParamChanges);
 
 class RouteCfg {
   final String path;
@@ -89,9 +90,12 @@ class RouteCfg {
   final rt.RoutePreLeaveEventHandler preLeave;
   final rt.RouteLeaveEventHandler leave;
   final List<String> bindParameters;
+  final bool dontLeaveOnParamChanges;
 
   RouteCfg({this.view, this.path, this.mount, this.modules, this.defaultRoute,
-      this.enter, this.preEnter, this.preLeave, this.leave, this.bindParameters});
+      this.enter, this.preEnter, this.preLeave, this.leave, this.bindParameters, this.dontLeaveOnParamChanges: false}) {
+    assert(dontLeaveOnParamChanges != null);
+  }
 }
 
 

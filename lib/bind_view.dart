@@ -83,10 +83,16 @@ class BindView extends PolymerElement implements RouteProvider {
     super.detached();
   }
 
+  dom.Element _viewElement;
+
   void show(View viewDef, rt.Route route, List<Module> modules) {
     assert(route.isActive);
 
-    if (_viewRoute != null) return;
+    if (_viewRoute != null) {
+      _destroyParameterBindings();
+      _createParameterBindings(viewDef);
+      return;
+    }
     _viewRoute = route;
 
     async.StreamSubscription _leaveSubscription;
@@ -101,32 +107,39 @@ class BindView extends PolymerElement implements RouteProvider {
     _view = viewDef;
 
     //print('append: ${viewDef.template}');
-    var viewElement = new dom.Element.tag(viewDef.template);
-    append(viewElement);
+    _viewElement = new dom.Element.tag(viewDef.template);
+    append(_viewElement);
 
+    _createParameterBindings(viewDef);
+  }
+
+  List _dynamicBindings = [];
+
+  void _createParameterBindings(View viewDef) {
     if(parameters != null) {
       if(viewDef.bindParameters != null) {
         viewDef.bindParameters.forEach((k) {
-          print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
-          _dynamicBindings.add((viewElement as PolymerElement)
+          //print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
+          _dynamicBindings.add((_viewElement as PolymerElement)
             .bindProperty(new Symbol(k), new PathObserver(this, 'parameters.${k}')));
         });
       } else {
         parameters.keys.forEach((k) {
-          print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
-          _dynamicBindings.add((viewElement as PolymerElement)
+          //print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
+          _dynamicBindings.add((_viewElement as PolymerElement)
             .bindProperty(new Symbol(k), new PathObserver(this, 'parameters.${k}')));
         });
       }
     }
   }
 
-  List _dynamicBindings = [];
-//  Map<String, String> get bindingParameters => _viewRoute.parameters;
-
-  void _cleanUp() {
+  void _destroyParameterBindings() {
     _dynamicBindings.forEach((Bindable b) => b.close());
     _dynamicBindings.clear();
+  }
+
+  void _cleanUp() {
+    _destroyParameterBindings();
 
     if (_view == null) return;
     children.clear();
