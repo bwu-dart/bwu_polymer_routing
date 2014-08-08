@@ -4,9 +4,10 @@ import 'dart:async' as async;
 import 'package:polymer/polymer.dart';
 import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
 import 'package:route_hierarchical/client.dart' as rt;
+import 'package:bwu_polymer_routing/di.dart';
 
 @CustomTag('article-element')
-class ArticleElement extends PolymerElement {
+class ArticleElement extends PolymerElement with DiConsumer {
   ArticleElement.created() : super.created();
 
   @observable String articleId;
@@ -27,17 +28,10 @@ class ArticleElement extends PolymerElement {
   rt.Route route;
   async.Future _requestDependencies() {
     return new async.Future(() {
-      var event = fire('polymer-di', detail: {
-        RouteProvider: null,
-        rt.Router: null
-      });
-
-      if(event.defaultPrevented) {
-        var di = event.detail;
-        //userId = (di[RouteProvider] as RouteProvider).parameters['userId'];
-        route = (di[RouteProvider].route as rt.Route);
-        router = (di[rt.Router] as rt.Router); //.go('view', {}, startingFrom: di[RouteProvider].route);
-      }
+      var di = inject(this, [RouteProvider, rt.Router]);
+      //userId = (di[RouteProvider] as RouteProvider).parameters['userId'];
+      route = (di[RouteProvider].route as rt.Route);
+      router = (di[rt.Router] as rt.Router); //.go('view', {}, startingFrom: di[RouteProvider].route);
     });
   }
 

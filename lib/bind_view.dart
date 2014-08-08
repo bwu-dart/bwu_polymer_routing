@@ -8,10 +8,11 @@ import 'package:bwu_polymer_routing/module.dart'
   show RouteProvider, RoutingHelper, View, RouteHandle;
 import 'package:polymer/polymer.dart';
 import 'package:di/di.dart' show Injector, Module, ModuleInjector;
+import 'package:bwu_polymer_routing/di.dart';
 
 
 @CustomTag('bind-view')
-class BindView extends PolymerElement implements RouteProvider {
+class BindView extends PolymerElement with DiContext, DiConsumer implements RouteProvider {
   BindView.created() : super.created();
 
   RoutingHelper _locationService;
@@ -30,12 +31,7 @@ class BindView extends PolymerElement implements RouteProvider {
 
   void _init() {
     new async.Future(() {
-      var event = fire('polymer-di', detail: {
-        rt.Router: null,
-        RoutingHelper: null});
-
-      if(event.defaultPrevented) {
-        var di = event.detail;
+      var di = inject(this, [rt.Router, RoutingHelper]);
         rt.Router router = di[rt.Router];
         _locationService = di[RoutingHelper];
         _appInjector = new ModuleInjector([new Module()
@@ -47,26 +43,8 @@ class BindView extends PolymerElement implements RouteProvider {
               router.root.newHandle();
         _locationService.registerPortal(this);
         maybeReloadViews();
-      } else {
-        print('DI request was not handled.');
-      }
 
-      _serveDiRequests();
-    });
-  }
-
-  void _serveDiRequests() {
-    $['content'].on['polymer-di'].listen((dom.CustomEvent e) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      try {
-      e.detail.keys.where((k) => e.detail[k] == null).forEach((k) {
-        e.detail[k] = _appInjector.get(k);
-      });
-      } catch(e) {
-        print(e);
-      }
-      e.detail[Injector] = _appInjector;
+      initDiContext($['content'], _appInjector);
     });
   }
 

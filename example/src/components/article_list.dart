@@ -3,9 +3,10 @@ library bwu_polymer_router.example.article_list;
 import 'dart:async' as async;
 import 'package:polymer/polymer.dart';
 import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
+import 'package:bwu_polymer_routing/di.dart';
 
 @CustomTag('article-list')
-class ArticleList extends PolymerElement {
+class ArticleList extends PolymerElement with DiConsumer {
   ArticleList.created() : super.created();
 
   @observable String userId;
@@ -17,14 +18,8 @@ class ArticleList extends PolymerElement {
     super.attached();
 
     new async.Future(() {
-      var event = fire('polymer-di', detail: {
-        RouteProvider: null
-      });
-
-      if(event.defaultPrevented) {
-        var di = event.detail;
-        userId = (di[RouteProvider] as RouteProvider).parameters['userId'];
-      }
+      var di = inject(this, [RouteProvider]);
+      userId = (di[RouteProvider] as RouteProvider).parameters['userId'];
     });
   }
 }
