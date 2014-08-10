@@ -130,6 +130,8 @@ import 'package:bwu_polymer_routing/di.dart';
 class AppModule extends Module {
   AppModule() : super() {
     // at first install the RoutingModule 
+    // usePushState: true/false defines whether only the hash part (after #) 
+    // should be used for routing (false)  or the entire URL (true)
     install(new RoutingModule(usePushState: false));
     // then add your custom bindings
     // the RoutInitializer class contains our custom router configuration
@@ -150,9 +152,93 @@ class AppElement extends PolymerElement with DiContext {
     super.attached();
 
     // init the DI container 
-    // we pass the element for whose children it should serve di requests
+    // we pass the element it should listen for di request events
     // and the di configuration (AppModule) 
     initDiContext(this, new ModuleInjector([new AppModule()]));
   }
 }
 ```
+
+###example/src/route_initializer.dart
+
+```Dart
+library bwu_polymer_routing_example.route_initializer;
+
+import 'package:route_hierarchical/client.dart' as rt;
+import 'package:bwu_polymer_routing/module.dart';
+
+class RouteInitializer implements Function {
+  void call(rt.Router router, RouteViewFactory views) {
+    views.configure({
+
+      // 'userList' is the name for this route
+      'usersList': routeCfg(
+          // '/users' is the path element shown in the browsers URL bar for this route
+          path: '/users',
+          // The tag name for the view to create for this route.
+          view: 'user-list',
+          // Use this route when no specific route can be found for the current URL.
+          defaultRoute: true,
+          // Don't recreate (remove/add) the view element but just pass the 
+          // updated parameter values.
+          dontLeaveOnParamChanges: true,
+          // When this route is choosen as default route, the view is created but 
+          // the URL in the browsers URL bar doesn't reflect this
+          // explicitely go to this route updates the URL in the address bar
+          // (maybe there is a better way to reach the same result).  
+          enter: (route) => router.go('usersList', {})),
+      'user': routeCfg(
+          // The ':userId' part gets assigned to the attribute named 'userId' 
+          // of the created view.
+          path: '/user/:userId',
+          view: 'user-element',
+          // When the 'userId' value changes the new value is passed to the
+          // view without removing and recreating the view.
+          dontLeaveOnParamChanges: true,
+          // The user route has some sub routes.
+          mount: {
+        'articleList': routeCfg(
+            path: '/articles',
+            view: 'article-list',
+            defaultRoute: true,
+            dontLeaveOnParamChanges: true,
+            mount: {
+            // The route 'user.articleList' again has sub-routes.
+          'article': routeCfg(
+              path: '/article/:articleId',
+              view: 'article-element',
+              // All parameters from this route and all parent routes are
+              // assigned to the view. If the view doesn't have an attribute
+              // with this name the assignment fails with an exception.
+              // With bindParameters the set of parameters assigned to the view
+              // can be limited.
+              // The default is all paremeters.
+              // This example lists all parameters and is therefor redundant.
+              bindParameters: ['articleId', 'userId'],
+              dontLeaveOnParamChanges: true,
+              mount: {
+            // These sub-routes don't create their own view but update the
+            // status of the view of the parent route instead.
+            // In fact this isn't done automatically but needs some additional 
+            // code in the view itself.
+            // The implementation of the (parent) view would be easier when 
+            // these parts had been implemented as parameters instead of 
+            // sub-routes.
+            'view': routeCfg(
+                path: '/view',
+                defaultRoute: true,
+                // This seems not to have any effect for routes which don't 
+                // create their own view (I have to investigate further how 
+                // this actually works).
+                dontLeaveOnParamChanges: true),
+            'edit': routeCfg(
+                path: '/edit',
+                dontLeaveOnParamChanges: true)
+          })
+        })
+      })
+    });
+  }
+}
+```
+
