@@ -8,7 +8,7 @@ packages:
   args:
     description: args
     source: hosted
-    version: "0.10.0+2"
+    version: "0.11.0+1"
   barback:
     description: barback
     source: hosted
@@ -20,7 +20,7 @@ packages:
   code_transformers:
     description: code_transformers
     source: hosted
-    version: "0.2.0+3"
+    version: "0.2.1"
   collection:
     description: collection
     source: hosted
@@ -44,7 +44,7 @@ packages:
   observe:
     description: observe
     source: hosted
-    version: "0.11.0+4"
+    version: "0.11.0+5"
   path:
     description: path
     source: hosted
@@ -52,7 +52,7 @@ packages:
   polymer:
     description: polymer
     source: hosted
-    version: "0.12.0+7"
+    version: "0.12.1"
   polymer_expressions:
     description: polymer_expressions
     source: hosted
@@ -68,7 +68,7 @@ packages:
   smoke:
     description: smoke
     source: hosted
-    version: "0.2.0+3"
+    version: "0.2.1"
   source_maps:
     description: source_maps
     source: hosted

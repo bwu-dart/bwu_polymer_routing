@@ -1,9 +1,9 @@
 library bwu_polymer_router.example.app_element;
 
 import 'package:polymer/polymer.dart';
-import 'package:di/di.dart' show Module, ModuleInjector, Injector, TypeReflector;
+import 'package:di/di.dart' show Module, ModuleInjector;
 import 'package:bwu_polymer_routing/module.dart'
-    show RouteInitializerFn, RoutingModule, RoutingHelper, RouteProvider;
+    show RoutingModule;
 import 'package:bwu_polymer_routing/static_keys.dart';
 import 'route_initializer.dart';
 import 'package:bwu_polymer_routing/di.dart';
