@@ -16,6 +16,7 @@
 
     <ul>
       <template repeat='{{user in users}}'>
+        <!-- todo(zoechi) change the link so that it works independent of the  usePushState configuration -->
         <li><a _href='#/user/{{user}}/articles'>{{user}}</a></li>
       </template>
     </ul>
