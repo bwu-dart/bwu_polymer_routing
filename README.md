@@ -2,10 +2,12 @@
 
 Some helper classes and components to use route_hierarchical with Polymer.dart.
 
-I put [a simple example](http://bwu-dart.github.io/bwu_polymer_routing/example/index.html) online.
+I put [a simple example](http://bwu-dart.github.io/bwu_polymer_routing/example/example_01.html) online.
 
 
 ##Usage
+
+This is the code of the example in the `example` directory with addition comments.
 
 ###pubspec.yaml
 
@@ -91,7 +93,8 @@ In your application package you should put the components somewhere in your `lib
 <!-- bind-view --> is a placeholder where view elements are inserted -->
 <link rel='import' href='../../../../packages/bwu_polymer_routing/bind_view.html'>
 
-<!-- this elements are used as views -->
+<!-- These Polymer elements are used as views. 
+     Polymer elements must be imported somewhere before they can be used used -->
 <link rel='import' href='user_list.html'>
 <link rel='import' href='user_element.html'>
 <link rel='import' href='article_list.html'>
@@ -105,8 +108,13 @@ In your application package you should put the components somewhere in your `lib
       }
     </style>
 
-    <!-- our app-element has no HTML content beside this view placeholder --> 
+    <!-- our app-element has no HTML content beside this view placeholder 
+         the view element configured for any top level route is added as 
+         a child element to the <bind-view> element.
+         The 'id' attribute was only added for debugging purposes and can
+         be omitted. --> 
     <bind-view id='app-element'></bind-view>
+    
   </template>
   <script type='application/dart' src='app_element.dart'></script>
 </polymer-element>
@@ -160,6 +168,8 @@ class AppElement extends PolymerElement with DiContext {
 ```
 
 ###example/src/route_initializer.dart
+
+This class defines the routing configuration for this example.
 
 ```Dart
 library bwu_polymer_routing_example.route_initializer;

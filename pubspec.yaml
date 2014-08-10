@@ -14,5 +14,5 @@ dependency_overrides:
 transformers:
 - polymer:
     entry_points:
-    - example/index.html
+    - example/example_01.html
 - di
