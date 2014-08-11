@@ -137,7 +137,9 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
     var res = new coll.HashMap<String, String>();
     var p = _viewRoute;
     while (p != null) {
-      res.addAll(p.parameters);
+      if(p.parameters != null) {
+        res.addAll(p.parameters);
+      }
       p = p.parent;
     }
     return res;

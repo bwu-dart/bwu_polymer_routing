@@ -3,7 +3,7 @@ library bwu_polymer_routing.di;
 import 'dart:html' as dom;
 import 'dart:async' as async;
 import 'package:di/di.dart' as di;
-import 'package:polymer/polymer.dart';
+//import 'package:polymer/polymer.dart';
 import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
 import 'package:route_hierarchical/client.dart' as rt;
 
@@ -36,6 +36,7 @@ class DiContext {
  * routing helper methods.
  */
 class DiConsumer {
+
   // TODO(zoechi) DartDoc
   Map<Type, dynamic> inject(dom.Element host, [List<Type> types]) {
     var event =
@@ -52,10 +53,10 @@ class DiConsumer {
   }
 
   rt.Router _router;
-  rt.Router get router => _router;
+  //rt.Router get router => _router;
 
   RouteProvider _routeProvider;
-  RouteProvider get routeProvider => _routeProvider;
+  //RouteProvider get routeProvider => _routeProvider;
 
 // TODO(zoechi) DartDoc
   void _injectRouter(dom.Element host, [bool force = false]) {
@@ -66,17 +67,55 @@ class DiConsumer {
     }
   }
 
-// TODO(zoechi) DartDoc
-  void parentRoute(dom.Event e) {
-    e.preventDefault();
-    _injectRouter(e.target);
-    if (router == null) return;
+  async.Future goParentRoute(dom.Element host) {
+    _injectRouter(host);
 
-    router.go(
-        routeToPath(routeProvider.route.parent),
-        routeProvider.parameters);
+    if (_router == null) return new async.Future.value();
+
+    return _router.go(
+        routeToPath(_routeProvider.route.parent),
+        _routeProvider.parameters);
   }
 
+// TODO(zoechi) DartDoc
+  void goParentRouteHandler(dom.Event e) {
+    e.preventDefault();
+    goParentRoute(e.target);
+  }
+
+  async.Future goPath(dom.Element host, String routePath, {Map<String,String> parameters : const {}}) {
+    _injectRouter(host);
+    return _router.go(
+        routePath,
+        _router.activePath[_router.activePath.length -1].parameters..addAll(parameters));
+  }
+
+  async.Future goPathFromAttributes(dom.Element host) {
+    _injectRouter(host);
+    var routePath = host.attributes['route-path'];
+    Map additionalParameters = {};
+    host.attributes.forEach((k, v) {
+      if (k.startsWith('route-param-name')) {
+        additionalParameters[v] =
+            host.attributes['route-param-value${k.substring('route-param-name'.length)}'];
+      }
+    });
+
+    if (additionalParameters == null) additionalParameters = {};
+    return _router.go(
+        routePath,
+        _router.activePath[_router.activePath.length -1].parameters..addAll(additionalParameters));
+  }
+
+// TODO(zoechi) DartDoc
+  void goPathHandler(dom.Event e) {
+    e.preventDefault();
+    //if (_router == null) return;
+
+    goPathFromAttributes(e.target);
+  }
+
+// TODO(zoechi) DartDoc
   String routeToPath(rt.Route route) {
     String path = route.name;
     var parent = route.parent;
@@ -86,27 +125,4 @@ class DiConsumer {
     }
     return path;
   }
-
-// TODO(zoechi) DartDoc
-  void routePath(dom.Event e) {
-    e.preventDefault();
-    _injectRouter(e.target);
-    if (router == null) return;
-
-    dom.Element target = e.target;
-    var routePath = target.attributes['route-path'];
-    Map additionalParameters = {};
-    target.attributes.forEach((k, v) {
-      if (k.startsWith('route-param-name')) {
-        additionalParameters[v] =
-            target.attributes['route-param-value${k.substring('route-param-name'.length)}'];
-      }
-    });
-
-    if (additionalParameters == null) additionalParameters = {};
-    router.go(
-        routePath,
-        routeProvider.parameters..addAll(additionalParameters));
-  }
-
 }
