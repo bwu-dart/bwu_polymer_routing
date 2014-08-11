@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <link rel='import' href='../../../packages/polymer/polymer.html'>
+<link rel='import' href='../../../packages/bwu_polymer_routing/route_link.html'>
 
 <polymer-element name='user-list'>
   <template>
@@ -16,7 +17,10 @@
 
     <ul>
       <template repeat='{{user in users}}'>
-        <li><a _href='#/user/{{user}}/articles'>{{user}}</a></li>
+        <li><a href='#' on-click="{{routePath}}"
+          route-path='user.articleList'
+          route-param-name="userId"
+          route-param-value="{{user}}">{{user}}</a></li>
       </template>
     </ul>
     <content></content>

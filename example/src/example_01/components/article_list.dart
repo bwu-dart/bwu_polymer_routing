@@ -1,12 +1,13 @@
-library bwu_polymer_router.example.article_list;
+library bwu_polymer_router.example_01.article_list;
 
 //import 'dart:async' as async;
 import 'package:polymer/polymer.dart';
+import 'package:bwu_polymer_routing/di.dart' as di;
 //import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
-import 'package:bwu_polymer_routing/di.dart';
+//import 'package:bwu_polymer_routing/di.dart';
 
 @CustomTag('article-list')
-class ArticleList extends PolymerElement with DiConsumer {
+class ArticleList extends PolymerElement with di.DiConsumer {
   ArticleList.created() : super.created();
 
   @observable String userId;

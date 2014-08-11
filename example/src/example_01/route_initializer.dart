@@ -1,4 +1,4 @@
-library bwu_polymer_routing_example.route_initializer;
+library bwu_polymer_routing.example_01.route_initializer;
 
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:bwu_polymer_routing/module.dart';

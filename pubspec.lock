@@ -25,6 +25,10 @@ packages:
     description: collection
     source: hosted
     version: "0.9.4"
+  core_elements:
+    description: core_elements
+    source: hosted
+    version: "0.1.1+2"
   csslib:
     description: csslib
     source: hosted
@@ -45,6 +49,10 @@ packages:
     description: observe
     source: hosted
     version: "0.11.0+5"
+  paper_elements:
+    description: paper_elements
+    source: hosted
+    version: "0.1.0+2"
   path:
     description: path
     source: hosted
@@ -61,6 +69,10 @@ packages:
     description: pool
     source: hosted
     version: "1.0.1"
+  quiver:
+    description: quiver
+    source: hosted
+    version: "0.18.2"
   route_hierarchical:
     description: route_hierarchical
     source: hosted

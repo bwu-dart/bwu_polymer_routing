@@ -1,13 +1,13 @@
-library bwu_polymer_router.example.article_element;
+library bwu_polymer_router.example_01.article_element;
 
 import 'dart:async' as async;
 import 'package:polymer/polymer.dart';
 import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
 import 'package:route_hierarchical/client.dart' as rt;
-import 'package:bwu_polymer_routing/di.dart';
+import 'package:bwu_polymer_routing/di.dart' as di;
 
 @CustomTag('article-element')
-class ArticleElement extends PolymerElement with DiConsumer {
+class ArticleElement extends PolymerElement with di.DiConsumer {
   ArticleElement.created() : super.created();
 
   @observable String articleId;
@@ -26,6 +26,7 @@ class ArticleElement extends PolymerElement with DiConsumer {
 
   rt.Router router;
   rt.Route route;
+
   async.Future _requestDependencies() {
     return new async.Future(() {
       var di = inject(this, [RouteProvider, rt.Router]);

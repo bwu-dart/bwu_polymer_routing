@@ -9,10 +9,13 @@ dependencies:
   di: '>=2.0.1 <2.1.0'
   polymer: '>=0.12.0+7 <0.13.0'
   route_hierarchical: '>=0.4.21 <0.5.0'
+  core_elements: '>=0.1.1+2 <0.2.0'
+  paper_elements: '>=0.1.0+2 <0.2.0'
 dependency_overrides:
   code_transformers: '>=0.2.0 <0.3.0'
 transformers:
 - polymer:
     entry_points:
     - example/example_01.html
+    - example/example_02.html
 - di

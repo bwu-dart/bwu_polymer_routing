@@ -2,6 +2,8 @@
 
 <link rel='import' href='../../../packages/polymer/polymer.html'>
 
+<link rel='import' href='../../../packages/bwu_polymer_routing/route_link.html'>
+
 <polymer-element name='article-element'>
   <template>
     <style>
@@ -10,13 +12,18 @@
         border: solid 2px green;
         margin: 2px;
       }
+
+      div.isEditMode {
+        color: red;
+      }
     </style>
 
-    <div>&lt; <a _href="#/user/{{userId}}/articles">articles</a></div>
+    <div>&lt;<a href="#" on-click="{{parentRoute}}">articles</a></div>
     <div><button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button></div>
+    <p>All parent views are recreated when view/edit mode is switched because the modes are configured as sub-routes. This can be avoided by defining the mode as route parameter instead.</p>
 
     <h3>article-element</h3>
-    <div>isEditMode: {{isEditMode}}</div>
+    <div class="{{ {'isEditMode': isEditMode} }}">isEditMode: {{isEditMode}}</div>
     <div>articleId: {{articleId}}</div>
     <div>userId: {{userId}}</div>
     <content></content>
