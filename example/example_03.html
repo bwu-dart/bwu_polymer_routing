@@ -412,7 +412,7 @@ html /deep/ [segment], html /deep/ segment {
 
     <div>&lt;&nbsp;<a href="#" on-click="{{parentRoute}}">articles</a></div>
     <div><button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button></div>
-    <p>All parent views are recreated when view/edit mode is switched because the modes are configured as sub-routes. This can be avoided by defining the mode as route parameter instead.</p>
+    <p>The edit mode (view/edit) is implemented as a sub-route. The URL reflects the mode. An alternative way would to use a route parameter for the edit mode.</p>
 
     <h3>article-element</h3>
     <div class="{{ {'isEditMode': isEditMode} }}">isEditMode: {{isEditMode}}</div>
@@ -437,7 +437,7 @@ html /deep/ [segment], html /deep/ segment {
 
     <app-element></app-element>
 
-    <h3><a href="https://github.com/bwu-dart/bwu_polymer_routing/tree/master/example" target="_blank">The examples source codes can be found here.</a></h3>
+    <h3><a href="https://github.com/bwu-dart/bwu_polymer_routing/tree/master/example" target="_blank">The examples source code can be found here.</a></h3>
   
 
 <script src="example_03.html_bootstrap.dart.js" async=""></script></body></html>
