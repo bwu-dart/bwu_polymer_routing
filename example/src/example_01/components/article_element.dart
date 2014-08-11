@@ -18,10 +18,10 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
   void attached() {
     super.attached();
 
-    _requestDependencies()
-    .then((_) {
-      isEditMode = route.findRoute('edit').isActive;
-    });
+    _requestDependencies();
+//    .then((_) {
+//      isEditMode = route.findRoute('edit').isActive;
+//    });
   }
 
   rt.Router router;
@@ -38,9 +38,13 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
 
   void toggleEdit(e) {
     if(route.findRoute('view').isActive) {
-      router.go('edit', {}, startingFrom: route);
+      router.go('${routeToPath(route)}.edit', route.parameters)
+      .then((success) {
+        if(success) isEditMode = true;
+      });
     } else {
-      router.go('view', {}, startingFrom: route);
+      router.go('${routeToPath(route)}.view', route.parameters)
+      .then((success) => isEditMode = false);
     }
   }
 }

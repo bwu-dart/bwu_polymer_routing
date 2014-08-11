@@ -2,7 +2,9 @@
 
 Some helper classes and components to use route_hierarchical with Polymer.dart.
 
-I put [a simple example](http://bwu-dart.github.io/bwu_polymer_routing/example/example_01.html) online.
+I put a simple example online.
+- [Simple example 1 - usePushState: false](http://bwu-dart.github.io/bwu_polymer_routing/example/example_01.html)
+- [Simple example 2 - usePushState: true](http://bwu-dart.github.io/bwu_polymer_routing/example/example_02.html)
 
 
 ##Usage
