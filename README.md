@@ -398,7 +398,7 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
   void attached() {
     super.attached();
 
-    _requestDependencies();
+    _routeChange();
   }
 
   rt.Router router;
