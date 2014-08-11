@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 
-<link rel='import' href='../../../packages/polymer/polymer.html'>
+<link rel="import" href="../../../packages/polymer/polymer.html">
 
-<link rel='import' href='../../../packages/bwu_polymer_routing/bind_view.html'>
+<link rel="import" href="../../../packages/bwu_polymer_routing/bind_view.html">
 
-<polymer-element name='article-list'>
+<polymer-element name="article-list">
   <template>
     <style>
       :host {
@@ -17,16 +17,16 @@
     <p>The article-element view gets new parameter values assigned when another article is choosen due to the <em>dontLeaveOnParamChanges</em> setting without being recreated each time.</p>
 
     <ul>
-      <template repeat='{{article in articles}}'>
-        <li><a href='#' on-click='{{routePath}}'
-          route-path='user.articleList.article.view'
-          route-param-name-1="articleId",
-          route-param-value-1='{{article}}'>{{article}}</a></li>
+      <template repeat="{{article in articles}}">
+        <li><a href="#" on-click="{{routePath}}"
+          route-path="user.articleList.article.view"
+          route-param-name-1="articleId"
+          route-param-value-1="{{article}}">{{article}}</a></li>
       </template>
     </ul>
 
     <bind-view id="article-list"></bind-view>
     <content></content>
   </template>
-  <script type='application/dart' src='article_list.dart'></script>
+  <script type="application/dart" src="article_list.dart"></script>
 </polymer-element>

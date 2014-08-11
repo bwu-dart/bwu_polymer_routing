@@ -14,25 +14,47 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
   @observable String userId;
   @observable bool isEditMode = false;
 
-  @override
-  void attached() {
-    super.attached();
-
-    _requestDependencies();
-  }
-
   rt.Router router;
   rt.Route route;
 
-  async.Future _requestDependencies() {
-    return new async.Future(() {
-      var di = inject(this, [RouteProvider, rt.Router]);
-      route = (di[RouteProvider].route as rt.Route);
-      router = (di[rt.Router] as rt.Router);
+  @override
+  void attached() {
+    super.attached();
+    _routeChange();
+  }
+
+  void articleIdChanged(old) {
+    _routeChange();
+  }
+
+  void userIdChanged(old) {
+    _routeChange();
+  }
+
+  void _routeChange() {
+    router = null;
+    route = null;
+    new async.Future(() {
+      if(router != null) {
+        // prevent repeated execution when
+        // attached, articleIdChanged, userIdChanged fire succinctly.
+        return;
+      }
+      _requestDependencies();
+      isEditMode = route.findRoute('edit').isActive;
     });
   }
 
+  void _requestDependencies() {
+    var di = inject(this, [RouteProvider, rt.Router]);
+    route = (di[RouteProvider].route as rt.Route);
+    router = (di[rt.Router] as rt.Router);
+  }
+
   void toggleEdit(e) {
+    if(router == null) {
+      _requestDependencies();
+    }
     if(route.findRoute('view').isActive) {
       router.go('${routeToPath(route)}.edit', route.parameters)
       .then((success) {
