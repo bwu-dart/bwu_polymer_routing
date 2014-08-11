@@ -9,7 +9,7 @@ I put a simple example online.
 
 ##Usage
 
-This is the code of the example_01 in the `example` directory with addition comments.
+This is the code of `example_01` in the `example` directory with additional comments.
 
 ###pubspec.yaml
 
@@ -261,5 +261,167 @@ class RouteInitializer implements Function {
 
 ###example/src/example_01/components/user_element.html
 
-The user element 
+The `<user-element>` is a view that is shown inside the `<app-element>` and is itself a container for other views.  
+According to the route configuration it can contain the view for the 'user.articleList' route.
+
+To support this two lines are required:
+
+```HTML
+<link rel='import' href='../../../packages/bwu_polymer_routing/bind_view.html'>
+...
+<bind-view id="user_element"></bind-view> <!-- the id is again only for debugging purposes and can be omitted -->
+...
+
+The `<user-element>` also contains a link to the `userList` route.
+
+```HTML
+<a href='#' on-click="{{routePath}}" route-path='usersList'>users</a>
+```
+`routePath` is a helper method provided by the `DiConsumer` mixin.   
+To make it available we need to apply the mixin to the `UserElement` class in the `user_element.dart` file as shown bwlow.
+`routePath` is an event handler that routes to the route defined in the `route-path` attribute (userList in this case).
+
+###example/src/example_01/components/user_element.dart
+
+```dart
+library bwu_polymer_router.example_01.user_element;
+
+import 'package:polymer/polymer.dart';
+// import the file containing the mixins which help with dependency injection and routing
+import 'package:bwu_polymer_routing/di.dart' as di;
+
+@CustomTag('user-element')
+// with di.DiConsumer applies the DiConsumer mixin and makes some additional helper methods available.
+class UserElement extends PolymerElement with di.DiConsumer {
+  UserElement.created() : super.created();
+
+  // The route configuration (in route_initialized.art) defines a `userId` routing parameter for the `user` route.
+  // The actual value for the `userId` route parameter is assigned automatically to a field in the view with the same name
+  // when the view is created or when the parameter value changes.  
+  @published String userId;
+}
+```
+
+
+###example/src/example_01/components/user_list.html
+
+Using `<template repeat='...'>` a link is created for each user that forwards to the user detail view ('<user-element>') and also to the sub-route `articles` which creates the `<article-list>` element as view inside the `<user-element>` view.
+
+```HTML
+<template repeat='{{user in users}}'>
+  <li><a href='#' on-click="{{routePath}}"
+    route-path='user.articleList'
+    route-param-name="userId"
+    route-param-value="{{user}}">{{user}}</a></li>
+  </template>
+```       
+`routePath` is the same helper method provided by the `DiConsumer` as explained in `<user-element>` above.  
+The `route-path` attribute defines that the link should navigate to the `user.articleList' (as already shown in the `<user-element>` above).  
+In addition to a specific route we want to pass an `userId` argument because we want to see the `<user-element>` and the `<article-list>` for a specific user.  
+This is done by a pair of attributes `route-param-name` and `route-param-value`.  
+Here for each link the actual user value is passed to the `userId` route parameter.  
+
+It is supported to add more than one route parameter by adding an arbitrary suffix to the attribute name. 
+The only requirement is that there is a pair with matching suffixes. 
+A second parameter could be passed with `route-param-name-x2='birthDate'` and `route-param-value-x2='01/01/1985`. 
+In this example there is a `route-param-name`/route-param-value` attribute pair with the matching suffix `'-x2'`.
+
+
+###example/src/example_01/components/user_list.dart
+
+The `UserList` class doesn't contain anything new. Only the `DiConsumer` mixin is applied again to make the `routePath` event handler available.
+
+
+###example/src/example_01/components/article_element.html
+  
+The `<article-element>` offers a few new things.
+
+```html
+<a href="#" on-click="{{parentRoute}}">articles</a>
+```
+
+This link uses another event handler `parentRoute` from the `DiConsumer` mixin that just navigates one level up in the route hierarchy (from `user.articleList.article` to `user.articleList`).
+
+A bit special is the edit mode toggle button that switches between the `view` and `edit' sub route of the `user.articleList.article` route.
+
+```html
+<button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button>
+```
+
+
+###example/src/example_01/components/article_element.dart
+
+```dart
+library bwu_polymer_router.example_01.article_element;
+
+import 'dart:async' as async;
+import 'package:polymer/polymer.dart';
+// The RouteProvider type is used for a DI request
+import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
+// The Router and Route type from this library are also used for a DI request.
+import 'package:route_hierarchical/client.dart' as rt;
+// This import is again only to import the DiConsumer mixin.
+import 'package:bwu_polymer_routing/di.dart' as di;
+
+@CustomTag('article-element')
+// The DiConsumer mixin is used to provide the `inject` and `parentRoute` methods. 
+class ArticleElement extends PolymerElement with di.DiConsumer {
+  ArticleElement.created() : super.created();
+
+  // articleId and userId are passed in when the view is created/updated on a route change
+  @observable String articleId;
+  @observable String userId;
+  
+  // isEditMode is set from code below
+  @observable bool isEditMode = false;
+
+  @override
+  void attached() {
+    super.attached();
+
+    _requestDependencies();
+  }
+
+  rt.Router router;
+  rt.Route route;
+
+  // Fetch the current Route and Router instance from DI (provided by each 
+  // `<bind-view>` element (implicit) and the `<app-element>` element (explicit).
+  // A request is sent as an event and bubbles up until some element handles
+  // the DI request.
+  async.Future _requestDependencies() {
+    // we call this using a Future to give polymer some time to finish because  
+    // this method is called from `attached` and there might still be some 
+    // initialization to be done.  
+    return new async.Future(() {
+      // This line sends the DI request for two different types.
+      var di = inject(this, [RouteProvider, rt.Router]);
+      // Here we take the values from the result.
+      route = (di[RouteProvider].route as rt.Route);
+      router = (di[rt.Router] as rt.Router);
+    });
+  }
+
+  // This is the button event handler to switch between `edit` and `view` mode.
+  void toggleEdit(e) {
+    // At first we check which sub-route is currently active
+    if(route.findRoute('view').isActive) {
+      // Then we switch to the not yet active sub-route of the current route.
+      router.go('${routeToPath(route)}.edit', route.parameters)
+      .then((success) {
+        if(success) isEditMode = true;
+      });
+    } else {
+      router.go('${routeToPath(route)}.view', route.parameters)
+      .then((success) => isEditMode = false);
+    }
+  }
+}
+````
+
+###Summary
+
+This makes it quite easy to use routing and DI with Polymer.  
+
+Any suggestions for improvements are greatly appreciated. [Just create an issue in the GitHub repository](https://github.com/bwu-dart/bwu_polymer_routing/issues/new)
 

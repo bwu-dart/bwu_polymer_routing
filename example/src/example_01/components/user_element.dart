@@ -8,9 +8,4 @@ class UserElement extends PolymerElement with di.DiConsumer {
   UserElement.created() : super.created();
 
   @published String userId;
-
-  @override
-  void attached() {
-    super.attached();
-  }
 }

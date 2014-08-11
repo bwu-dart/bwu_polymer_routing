@@ -8,9 +8,4 @@ class UserList extends PolymerElement with di.DiConsumer {
   UserList.created() : super.created();
 
   var users = ['Jan', 'Peter', 'Julia', 'Martin'];
-
-  @override
-  void attached() {
-    super.attached();
-  }
 }

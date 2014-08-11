@@ -19,9 +19,6 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
     super.attached();
 
     _requestDependencies();
-//    .then((_) {
-//      isEditMode = route.findRoute('edit').isActive;
-//    });
   }
 
   rt.Router router;
@@ -30,9 +27,8 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
   async.Future _requestDependencies() {
     return new async.Future(() {
       var di = inject(this, [RouteProvider, rt.Router]);
-      //userId = (di[RouteProvider] as RouteProvider).parameters['userId'];
       route = (di[RouteProvider].route as rt.Route);
-      router = (di[rt.Router] as rt.Router); //.go('view', {}, startingFrom: di[RouteProvider].route);
+      router = (di[rt.Router] as rt.Router);
     });
   }
 
