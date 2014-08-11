@@ -385,7 +385,7 @@ html /deep/ [segment], html /deep/ segment {
 
     <ul>
       <template repeat="{{article in articles}}">
-        <li><a href="#" on-click="{{routePath}}" route-path="user.articleList.article.view" route-param-name-1="articleId" ,="" route-param-value-1="{{article}}">{{article}}</a></li>
+        <li><a href="#" on-click="{{routePath}}" route-path="user.articleList.article.view" route-param-name-1="articleId" route-param-value-1="{{article}}">{{article}}</a></li>
       </template>
     </ul>
 
@@ -410,7 +410,7 @@ html /deep/ [segment], html /deep/ segment {
       }
     </style>
 
-    <div>&lt;<a href="#" on-click="{{parentRoute}}">articles</a></div>
+    <div>&lt;&nbsp;<a href="#" on-click="{{parentRoute}}">articles</a></div>
     <div><button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button></div>
     <p>All parent views are recreated when view/edit mode is switched because the modes are configured as sub-routes. This can be avoided by defining the mode as route parameter instead.</p>
 
@@ -437,7 +437,7 @@ html /deep/ [segment], html /deep/ segment {
 
     <app-element></app-element>
 
-    <h3><a href="https://github.com/bwu-dart/bwu_polymer_routing/tree/master/example" target="_blank">Show the source code for the examples</a></h3>
+    <h3><a href="https://github.com/bwu-dart/bwu_polymer_routing/tree/master/example" target="_blank">The examples source codes can be found here.</a></h3>
   
 
 <script src="example_02.html_bootstrap.dart.js" async=""></script></body></html>
