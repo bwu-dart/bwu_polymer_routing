@@ -9,9 +9,10 @@ I put a simple example online.
 
 ##Usage
 
-This is the code of `example_01` in the `example` directory with additional comments.
+This is the code of `example_01` from the `example` directory with additional comments.
 
-Info: Currently the bwu_polymer_routing package can't be published to pub.dartlang.org because it needs a `dependency_overrides` for `code_transformers: '>=0.2.0 <0.3.0'`. This should be solved with `di 2.0.2` which will be published soon.
+**Info:** Currently a `dependency_overrides` is necessary when you use `bwu_polymer_routing` (see below). 
+This should be solved with `di 2.0.2` which will be published soon.
 
 ###pubspec.yaml
 
@@ -22,7 +23,10 @@ dependencies:
   polymer: '>=0.12.0+7 <0.13.0'
   bwu_polymer_routing: '>=0.0.1 <0.1.0'
   route_hierarchical: '>=0.4.21 <0.5.0'
-  di: '>=2.0.1 <2.1.0' 
+  di: '>=2.0.1 <2.1.0'
+   
+dependency_overrides:
+  code_transformers: '>=0.2.0 <0.3.0' # necessary until di 2.0.2 is published
   
 transformers:
 - polymer:
