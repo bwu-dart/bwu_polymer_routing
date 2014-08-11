@@ -277,7 +277,8 @@ To support this two lines are required:
 ```HTML
 <link rel='import' href='../../../packages/bwu_polymer_routing/bind_view.html'>
 ...
-<bind-view id="user_element"></bind-view> <!-- the id is again only for debugging purposes and can be omitted -->
+<bind-view id="user_element"></bind-view> 
+<!-- the id is again only for debugging purposes and can be omitted -->
 ```
 
 The `<user-element>` also contains a link to the `userList` route.
@@ -285,9 +286,11 @@ The `<user-element>` also contains a link to the `userList` route.
 ```HTML
 <a href='#' on-click="{{routePath}}" route-path='usersList'>users</a>
 ```
+
 `routePath` is a helper method provided by the `DiConsumer` mixin.   
-To make it available we need to apply the mixin to the `UserElement` class in the `user_element.dart` file as shown bwlow.
-`routePath` is an event handler that routes to the route defined in the `route-path` attribute (userList in this case).
+To make it available we need to apply the mixin to the `UserElement` class (in the `user_element.dart` file) as shown below.
+`routePath` is an event handler that routes to the route defined in the `route-path` attribute (`userList` in this case).
+
 
 ###example/src/example_01/components/user_element.dart
 
@@ -295,17 +298,20 @@ To make it available we need to apply the mixin to the `UserElement` class in th
 library bwu_polymer_router.example_01.user_element;
 
 import 'package:polymer/polymer.dart';
-// import the file containing the mixins which help with dependency injection and routing
+// Import the DiConsume mixin.
 import 'package:bwu_polymer_routing/di.dart' as di;
 
 @CustomTag('user-element')
-// with di.DiConsumer applies the DiConsumer mixin and makes some additional helper methods available.
+// `with di.DiConsumer` applies the DiConsumer mixin and makes some additional 
+// helper methods for routing and DI available.
 class UserElement extends PolymerElement with di.DiConsumer {
   UserElement.created() : super.created();
 
-  // The route configuration (in route_initialized.art) defines a `userId` routing parameter for the `user` route.
-  // The actual value for the `userId` route parameter is assigned automatically to a field in the view with the same name
-  // when the view is created or when the parameter value changes.  
+  // The route configuration (in route_initialized.dart) defines a `userId` 
+  // routing parameter for the `user` route.
+  // The actual value for the `userId` route parameter is assigned automatically 
+  // to a field in the view with a matching name when the view is created or when
+  // the parameter value changes.  
   @published String userId;
 }
 ```
@@ -313,7 +319,7 @@ class UserElement extends PolymerElement with di.DiConsumer {
 
 ###example/src/example_01/components/user_list.html
 
-Using `<template repeat='...'>` a link is created for each user that forwards to the user detail view ('<user-element>') and also to the sub-route `articles` which creates the `<article-list>` element as view inside the `<user-element>` view.
+Uses `<template repeat='...'>` to create a list of links (one for each user) that forwards to the user detail view ('<user-element>') and also to the sub-route `articles` which creates the `<article-list>` element as view inside the `<user-element>` view.
 
 ```HTML
 <template repeat='{{user in users}}'>
@@ -324,7 +330,7 @@ Using `<template repeat='...'>` a link is created for each user that forwards to
   </template>
 ```       
 `routePath` is the same helper method provided by the `DiConsumer` as explained in `<user-element>` above.  
-The `route-path` attribute defines that the link should navigate to the `user.articleList' (as already shown in the `<user-element>` above).  
+The `route-path` attribute defines that the link should navigate to the `user.articleList` route (as already shown in the `<user-element>` above).  
 In addition to a specific route we want to pass an `userId` argument because we want to see the `<user-element>` and the `<article-list>` for a specific user.  
 This is done by a pair of attributes `route-param-name` and `route-param-value`.  
 Here for each link the actual user value is passed to the `userId` route parameter.  
