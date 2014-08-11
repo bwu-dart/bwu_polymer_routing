@@ -9,7 +9,7 @@ I put a simple example online.
 
 ##Usage
 
-This is the code of the example in the `example` directory with addition comments.
+This is the code of the example_01 in the `example` directory with addition comments.
 
 ###pubspec.yaml
 
@@ -31,7 +31,7 @@ transformers:
 - di
 ```
 
-###example/index.html
+###example/example_01.html
 
 ```html
 <!DOCTYPE html>
@@ -49,7 +49,7 @@ transformers:
 
     <!-- even though we use an app-element, the di transformer requires a custom main method -->
     <!--<script type="application/dart">export 'package:polymer/init.dart';</script>-->
-    <script type="application/dart" src="index.dart"></script>
+    <script type="application/dart" src="example_01.dart"></script>
     <script src="packages/browser/dart.js"></script>
   </head>
   <body>
@@ -60,10 +60,10 @@ transformers:
 
 The `di` transformer needs a `main()` method where it adds the initialization code for the generated static injector. Therefore we need a main method even though we use an `<app-element>` which encloses the entire application and the application initialization code.
 
-###example/index.dart
+###example/example_01.dart
 
 ```dart
-library bwu_polymer_routing.example.main;
+library bwu_polymer_routing.example_01.main;
 
 import 'package:polymer/polymer.dart';
 import 'package:bwu_polymer_routing/module.dart' as brt;
@@ -80,20 +80,21 @@ of
 The index.dart file and its content are only used to satisfy the `di` transformer.  
 When we have a custom `main()` we need to call `initPolymer()`. The call to `run()` is optional and only needed if some additional code should be run after Polymer was initialized.
 
-###example/components/app_element.html
 
-In your application package you should put the components somewhere in your `lib` directory. We have the `bwu_polymer_routing` library code in `lib` and therefore keep the example application code entirely in the `example` folder.
+###example/src/example_01/components/app_element.html
+
+In your application package you should put the components somewhere in your `lib` directory. We have to keep the `bwu_polymer_routing` library code in `lib` and therefore keep the example application code entirely inside the `example` folder.
 
 ```html
 <!DOCTYPE html>
 
 <!-- each Polymer element should containt this import 
      the number of '../' depends on the directory where this file is stored in -->
-<link rel='import' href='../../../../packages/polymer/polymer.html'>
+<link rel='import' href='../../../../../packages/polymer/polymer.html'>
 
 <!-- each used Polymer element needs to be imported somewhere -->
 <!-- bind-view --> is a placeholder where view elements are inserted -->
-<link rel='import' href='../../../../packages/bwu_polymer_routing/bind_view.html'>
+<link rel='import' href='../../../../../packages/bwu_polymer_routing/bind_view.html'>
 
 <!-- These Polymer elements are used as views. 
      Polymer elements must be imported somewhere before they can be used used -->
@@ -122,18 +123,18 @@ In your application package you should put the components somewhere in your `lib
 </polymer-element>
 ```
 
-###example/components/app_element.dart
+###example/src/example_01/components/app_element.dart
 
 ```dart
 // each Dart file should have an unique library name
-library bwu_polymer_router.example.app_element;
+library bwu_polymer_router.example_01.app_element;
 
 import 'package:polymer/polymer.dart';
 import 'package:di/di.dart' show Module, ModuleInjector;
 import 'package:bwu_polymer_routing/module.dart'
     show RoutingModule;
 import 'package:bwu_polymer_routing/static_keys.dart';
-import 'route_initializer.dart';
+import '../route_initializer.dart';
 import 'package:bwu_polymer_routing/di.dart';
 
 // register types for DI 
@@ -142,9 +143,16 @@ class AppModule extends Module {
     // at first install the RoutingModule 
     // usePushState: true/false defines whether only the hash part (after #) 
     // should be used for routing (false)  or the entire URL (true)
+    //
+    // Using `usePushState: true` requires server support otherwise resources
+    // like CSS files can't be found or a reload of the page will fail.
+    // Our example_02 doesn't load any additional ressource therefor it works
+    // with `usePushState: true` but you can't just reload the page because
+    // the original URL of the page is not available anymore.
     install(new RoutingModule(usePushState: false));
-    // then add your custom bindings
-    // the RoutInitializer class contains our custom router configuration
+    
+    // After installing the RoutingModule dd your custom bindings.
+    // The RoutInitializer class contains our custom router configuration.
     bindByKey(ROUTE_INITIALIZER_FN_KEY, toValue: new RouteInitializer());
   }
 }
@@ -161,20 +169,20 @@ class AppElement extends PolymerElement with DiContext {
 
     super.attached();
 
-    // init the DI container 
-    // we pass the element it should listen for di request events
-    // and the di configuration (AppModule) 
+    // Initialize the DI container. 
+    // We pass the element it should listen for di request events on
+    // and the di configuration (AppModule). 
     initDiContext(this, new ModuleInjector([new AppModule()]));
   }
 }
 ```
 
-###example/src/route_initializer.dart
+###example/src/example_01/route_initializer.dart
 
 This class defines the routing configuration for this example.
 
 ```Dart
-library bwu_polymer_routing_example.route_initializer;
+library bwu_polymer_routing_example_01.route_initializer;
 
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:bwu_polymer_routing/module.dart';
@@ -239,9 +247,6 @@ class RouteInitializer implements Function {
             'view': routeCfg(
                 path: '/view',
                 defaultRoute: true,
-                // This seems not to have any effect for routes which don't 
-                // create their own view (I have to investigate further how 
-                // this actually works).
                 dontLeaveOnParamChanges: true),
             'edit': routeCfg(
                 path: '/edit',
@@ -253,4 +258,8 @@ class RouteInitializer implements Function {
   }
 }
 ```
+
+###example/src/example_01/components/user_element.html
+
+The user element 
 
