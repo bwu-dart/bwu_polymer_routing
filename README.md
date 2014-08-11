@@ -404,23 +404,45 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
   rt.Router router;
   rt.Route route;
 
-  // Fetch the current Route and Router instance from DI. DI requests are served
-  // by each `<bind-view>` element (implicit) and the `<app-element>` element 
-  // (explicit).
-  // A request is sent as an event and bubbles up until some element handles
-  // the DI request.
-  async.Future _requestDependencies() {
-    // We initiate the DI request using a Future to give polymer some time to 
-    // finish because this method is called from `attached` and there might 
-    // still be some initialization yet to be done.  
-    return new async.Future(() {
-      // This line sends the DI request for two different types.
-      var di = inject(this, [RouteProvider, rt.Router]);
-      // Here we take the values from the result.
-      route = (di[RouteProvider].route as rt.Route);
-      router = (di[rt.Router] as rt.Router);
+  // An articleId change indicates a route change.
+  void articleIdChanged(old) {
+    _routeChange();
+  }
+
+  // An userId change indicates a route change.
+  void userIdChanged(old) {
+    _routeChange();
+  }
+
+  // Fetch dependencies again to ensure we have the most recent value.
+  void _routeChange() {
+    router = null;
+    route = null;
+    new async.Future(() {
+      if(router != null) {
+        // prevent repeated execution when
+        // attached, articleIdChanged, userIdChanged fire succinctly.
+        return;
+      }
+      _requestDependencies();
+      // init isEditMode depending on the current active route.
+      isEditMode = route.findRoute('edit').isActive;
     });
   }
+
+  void _requestDependencies() {
+    // If dependencies are not already fetched, do it now.
+    if(router == null) {
+      _requestDependencies();
+    }
+  
+    // This line sends the DI request for two different types.
+    var di = inject(this, [RouteProvider, rt.Router]);
+    // Here we take the values from the result.
+    route = (di[RouteProvider].route as rt.Route);
+    router = (di[rt.Router] as rt.Router);
+  }
+
 
   // This is the button event handler to switch between `edit` and `view` mode.
   void toggleEdit(e) {
