@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Simple example - usePushState: false</title>
 
     
     
@@ -334,8 +334,7 @@ html /deep/ [segment], html /deep/ segment {
 
     <ul>
       <template repeat="{{user in users}}">
-        <!-- todo(zoechi) change the link so that it works independent of the  usePushState configuration -->
-        <li><a _href="#/user/{{user}}/articles">{{user}}</a></li>
+        <li><a href="#" on-click="{{routePath}}" route-path="user.articleList" route-param-name="userId" route-param-value="{{user}}">{{user}}</a></li>
       </template>
     </ul>
     <content></content>
@@ -356,8 +355,7 @@ html /deep/ [segment], html /deep/ segment {
       }
     </style>
 
-    <!-- todo(zoechi) change the link so that it works independent of the  usePushState configuration -->
-    <div>&lt; <a href="#/users">users</a></div>
+    <div>&lt; <a href="#" on-click="{{routePath}}" route-path="usersList">users</a></div>
 
     <h3>user-element</h3>
 
@@ -383,11 +381,11 @@ html /deep/ [segment], html /deep/ segment {
       }
     </style>
     <h3>article-list</h3>
-    <div>The article-element view gets new parameter values assigned when another article is choosen due to the <em>dontLeaveOnParamChanges</em> setting</div>
+    <p>The article-element view gets new parameter values assigned when another article is choosen due to the <em>dontLeaveOnParamChanges</em> setting without being recreated each time.</p>
 
     <ul>
       <template repeat="{{article in articles}}">
-        <li><a _href="#/user/{{userId}}/articles/article/{{article}}/view">{{article}}</a></li>
+        <li><a href="#" on-click="{{routePath}}" route-path="user.articleList.article.view" route-param-name-1="articleId" ,="" route-param-value-1="{{article}}">{{article}}</a></li>
       </template>
     </ul>
 
@@ -412,9 +410,9 @@ html /deep/ [segment], html /deep/ segment {
       }
     </style>
 
-    <div>&lt; <a _href="#/user/{{userId}}/articles">articles</a></div>
+    <div>&lt;<a href="#" on-click="{{parentRoute}}">articles</a></div>
     <div><button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button></div>
-    <div>All parent views are recreated when view/edit mode is switched because the modes are configured as sub-routes. This can be avoided by defining the mode as route parameter instead.</div>
+    <p>All parent views are recreated when view/edit mode is switched because the modes are configured as sub-routes. This can be avoided by defining the mode as route parameter instead.</p>
 
     <h3>article-element</h3>
     <div class="{{ {'isEditMode': isEditMode} }}">isEditMode: {{isEditMode}}</div>

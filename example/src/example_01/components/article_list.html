@@ -14,11 +14,14 @@
       }
     </style>
     <h3>article-list</h3>
-    <div>The article-element view gets new parameter values assigned when another article is choosen due to the <em>dontLeaveOnParamChanges</em> setting</div>
+    <p>The article-element view gets new parameter values assigned when another article is choosen due to the <em>dontLeaveOnParamChanges</em> setting without being recreated each time.</p>
 
     <ul>
       <template repeat='{{article in articles}}'>
-        <li><a _href='#/user/{{userId}}/articles/article/{{article}}/view'>{{article}}</a></li>
+        <li><a href='#' on-click='{{routePath}}'
+          route-path='user.articleList.article.view'
+          route-param-name-1="articleId",
+          route-param-value-1='{{article}}'>{{article}}</a></li>
       </template>
     </ul>
 

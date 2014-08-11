@@ -1,0 +1,441 @@
+<!DOCTYPE html><html><head lang="en">
+    <meta charset="UTF-8">
+    <title>Simple example - usePushState: true</title>
+
+    
+    
+
+    
+
+    <!--<script type="application/dart">export 'package:polymer/init.dart';</script>-->
+    
+    
+  </head>
+  <body><script src="packages/web_components/platform.js"></script><script src="packages/web_components/dart_support.js"></script>
+
+
+
+
+
+
+
+
+
+
+<!-- unminfied for debugging:
+<link rel="import" href="src/js/polymer/layout.html">
+<script src="src/js/polymer/polymer.concat.js"></script>
+-->
+
+
+
+<style shim-shadowdom="">
+/*******************************
+          Flex Layout
+*******************************/
+
+html /deep/ [layout][horizontal], html /deep/ [layout][vertical] {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+html /deep/ [layout][horizontal][inline], html /deep/ [layout][vertical][inline] {
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+}
+
+html /deep/ [layout][horizontal] {
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+html /deep/ [layout][horizontal][reverse] {
+  -ms-flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+html /deep/ [layout][vertical] {
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+html /deep/ [layout][vertical][reverse] {
+  -ms-flex-direction: column-reverse;
+  -webkit-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+}
+
+html /deep/ [layout][wrap] {
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+html /deep/ [layout][wrap-reverse] {
+  -ms-flex-wrap: wrap-reverse;
+  -webkit-flex-wrap: wrap-reverse;
+  flex-wrap: wrap-reverse;
+}
+
+html /deep/ [flex] {
+  -ms-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+html /deep/ [flex][auto] {
+  -ms-flex: 1 1 auto;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+html /deep/ [flex][none] {
+  -ms-flex: none;
+  -webkit-flex: none;
+  flex: none;
+}
+
+html /deep/ [flex][one] {
+  -ms-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+html /deep/ [flex][two] {
+  -ms-flex: 2;
+  -webkit-flex: 2;
+  flex: 2;
+}
+
+html /deep/ [flex][three] {
+  -ms-flex: 3;
+  -webkit-flex: 3;
+  flex: 3;
+}
+
+html /deep/ [flex][four] {
+  -ms-flex: 4;
+  -webkit-flex: 4;
+  flex: 4;
+}
+
+html /deep/ [flex][five] {
+  -ms-flex: 5;
+  -webkit-flex: 5;
+  flex: 5;
+}
+
+html /deep/ [flex][six] {
+  -ms-flex: 6;
+  -webkit-flex: 6;
+  flex: 6;
+}
+
+html /deep/ [flex][seven] {
+  -ms-flex: 7;
+  -webkit-flex: 7;
+  flex: 7;
+}
+
+html /deep/ [flex][eight] {
+  -ms-flex: 8;
+  -webkit-flex: 8;
+  flex: 8;
+}
+
+html /deep/ [flex][nine] {
+  -ms-flex: 9;
+  -webkit-flex: 9;
+  flex: 9;
+}
+
+html /deep/ [flex][ten] {
+  -ms-flex: 10;
+  -webkit-flex: 10;
+  flex: 10;
+}
+
+html /deep/ [flex][eleven] {
+  -ms-flex: 11;
+  -webkit-flex: 11;
+  flex: 11;
+}
+
+html /deep/ [flex][twelve] {
+  -ms-flex: 12;
+  -webkit-flex: 12;
+  flex: 12;
+}
+
+/* alignment in cross axis */
+
+html /deep/ [layout][start] {
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+
+html /deep/ [layout][center], html /deep/ [layout][center-center] {
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+html /deep/ [layout][end] {
+  -ms-flex-align: end;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+}
+
+/* alignment in main axis */
+
+html /deep/ [layout][start-justified] {
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
+html /deep/ [layout][center-justified], html /deep/ [layout][center-center] {
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+html /deep/ [layout][end-justified] {
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+html /deep/ [layout][around-justified] {
+  -ms-flex-pack: around;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+
+html /deep/ [layout][justified] {
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+/* self alignment */
+
+html /deep/ [self-start] {
+  -ms-align-self: flex-start;
+  -webkit-align-self: flex-start;
+  align-self: flex-start;
+}
+
+html /deep/ [self-center] {
+  -ms-align-self: center;
+  -webkit-align-self: center;
+  align-self: center;
+}
+
+html /deep/ [self-end] {
+  -ms-align-self: flex-end;
+  -webkit-align-self: flex-end;
+  align-self: flex-end;
+}
+
+html /deep/ [self-stretch] {
+  -ms-align-self: stretch;
+  -webkit-align-self: stretch;
+  align-self: stretch;
+}
+
+/*******************************
+          Other Layout
+*******************************/
+
+html /deep/ [block] {
+  display: block;
+}
+
+/* ie support for hidden */
+html /deep/ [hidden] {
+  display: none !important;
+}
+
+html /deep/ [relative] {
+  position: relative;
+}
+
+html /deep/ [fit] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+body[fullbleed] {
+  margin: 0;
+  height: 100vh;
+}
+
+/*******************************
+            Other
+*******************************/
+
+html /deep/ [segment], html /deep/ segment {
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 1em 0.5em;
+  padding: 1em;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px 5px 5px 5px;
+}
+
+</style><script src="packages/polymer/src/js/polymer/polymer.js"></script><script>
+// TODO(sigmund): remove this script tag (dartbug.com/19650). This empty
+// script tag is necessary to work around a bug in Chrome 36.
+</script>
+
+<polymer-element name="bind-view">
+  <template>
+    <style>
+      :host {
+        display: inline;
+      }
+    </style>
+    <content id="content"></content>
+
+    <!-- to make binding to `parameters` for dynamically added views work -->
+    <template if="false">{{parameters}}</template>
+
+  </template>
+  
+</polymer-element>
+
+
+<polymer-element name="user-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px #aaf;
+        margin: 2px;
+      }
+    </style>
+
+    <h3>user-list</h3>
+
+    <ul>
+      <template repeat="{{user in users}}">
+        <li><a href="#" on-click="{{routePath}}" route-path="user.articleList" route-param-name="userId" route-param-value="{{user}}">{{user}}</a></li>
+      </template>
+    </ul>
+    <content></content>
+  </template>
+  
+</polymer-element>
+
+
+
+
+<polymer-element name="user-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px blue;
+        margin: 2px;
+      }
+    </style>
+
+    <div>&lt; <a href="#" on-click="{{routePath}}" route-path="usersList">users</a></div>
+
+    <h3>user-element</h3>
+
+    <div>{{userId}}</div>
+
+    <bind-view id="user_element"></bind-view>
+
+    <content></content>
+  </template>
+  
+</polymer-element>
+
+
+
+
+<polymer-element name="article-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px #afa;
+        margin: 2px;
+      }
+    </style>
+    <h3>article-list</h3>
+    <p>The article-element view gets new parameter values assigned when another article is choosen due to the <em>dontLeaveOnParamChanges</em> setting without being recreated each time.</p>
+
+    <ul>
+      <template repeat="{{article in articles}}">
+        <li><a href="#" on-click="{{routePath}}" route-path="user.articleList.article.view" route-param-name-1="articleId" ,="" route-param-value-1="{{article}}">{{article}}</a></li>
+      </template>
+    </ul>
+
+    <bind-view id="article-list"></bind-view>
+    <content></content>
+  </template>
+  
+</polymer-element>
+
+
+<polymer-element name="article-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+        border: solid 2px green;
+        margin: 2px;
+      }
+
+      div.isEditMode {
+        color: red;
+      }
+    </style>
+
+    <div>&lt;<a href="#" on-click="{{parentRoute}}">articles</a></div>
+    <div><button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button></div>
+    <p>All parent views are recreated when view/edit mode is switched because the modes are configured as sub-routes. This can be avoided by defining the mode as route parameter instead.</p>
+
+    <h3>article-element</h3>
+    <div class="{{ {'isEditMode': isEditMode} }}">isEditMode: {{isEditMode}}</div>
+    <div>articleId: {{articleId}}</div>
+    <div>userId: {{userId}}</div>
+    <content></content>
+  </template>
+  
+</polymer-element>
+<polymer-element name="app-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <bind-view id="app-element"></bind-view>
+  </template>
+  
+</polymer-element>
+
+    <app-element></app-element>
+  
+
+<script src="example_02.html_bootstrap.dart.js" async=""></script></body></html>
