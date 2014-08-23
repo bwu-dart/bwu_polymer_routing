@@ -1,6 +1,6 @@
 #BWU Polymer Routing
 
-Some helper classes and components to use route_hierarchical with Polymer.dart.
+Some helper classes and components to use the [route_hierarchical package](http://pub.dartlang.org/packages/route_hierarchical) (used by Angular.dart) with Polymer.dart.
 
 I put a simple example online.
 - [Simple example 1 - usePushState: false](http://bwu-dart.github.io/bwu_polymer_routing/example/example_01.html)
@@ -10,9 +10,6 @@ I put a simple example online.
 ##Usage
 
 This is the code of `example_01` from the `example` directory with additional comments.
-
-**Info:** Currently a `dependency_overrides` is necessary when you use `bwu_polymer_routing` (see below). 
-This should be solved with `di 2.0.2` which will be published soon.
 
 ###pubspec.yaml
 

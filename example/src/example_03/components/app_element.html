@@ -27,16 +27,20 @@
         color: #526E9C;
       }
       core-toolbar core-item:hover,
-      core-menu#main-menu core-item:hover {
+      core-menu#home-menu core-item:hover {
         color: blue;
+      }
+      #main-menu core-item#home-menu {
+        display: none;
       }
 
     </style>
 
     <core-scaffold>
       <core-header-panel navigation flex mode="seamed">
-        <core-toolbar><core-item  id="home" icon="home" route-path="overview" on-click="{{goPathHandler}}">Home</core-item></core-toolbar>
+        <core-toolbar><core-item  id="home" icon="home" on-click="{{overviewSelectHandler}}" label="Home"></core-item></core-toolbar>
         <core-menu id="main-menu" theme="core-light-theme" on-core-select="{{menuSelectHandler}}">
+          <core-item id="home-menu" label="Home" route-path="overview"></core-item>
           <core-item id="movies-menu" icon="drive-video" label="Movies" route-path="movies"></core-item> <!-- alternative icons: aspect-ratio drive-video, theaters -->
           <core-item id="actors-menu" icon="accessibility" label="People" route-path="people"></core-item>
         </core-menu>
