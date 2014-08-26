@@ -21,10 +21,10 @@ dependencies:
   bwu_polymer_routing: '>=0.0.1 <0.1.0'
   route_hierarchical: '>=0.4.21 <0.5.0'
   di: '>=2.0.1 <2.1.0'
-   
+
 dependency_overrides:
   code_transformers: '>=0.2.0 <0.3.0' # necessary until di 2.0.2 is published
-  
+
 transformers:
 - polymer:
     entry_points:
@@ -73,12 +73,12 @@ void main() {
   // dummy to satisfy the di transformer
   brt.RouteCfg y;
   initPolymer().run(() {
-of
+
   });
 }
 ```
 
-The index.dart file and its content are only used to satisfy the `di` transformer.  
+The index.dart file and its content are only used to satisfy the `di` transformer.
 When we have a custom `main()` we need to call `initPolymer()`. The call to `run()` is optional and only needed if some additional code should be run after Polymer was initialized.
 
 
@@ -89,7 +89,7 @@ In your application package you should put the components somewhere in your `lib
 ```html
 <!DOCTYPE html>
 
-<!-- each Polymer element should containt this import 
+<!-- each Polymer element should containt this import
      the number of '../' depends on the directory where this file is stored in -->
 <link rel='import' href='../../../../../packages/polymer/polymer.html'>
 
@@ -97,7 +97,7 @@ In your application package you should put the components somewhere in your `lib
 <!-- bind-view --> is a placeholder where view elements are inserted -->
 <link rel='import' href='../../../../../packages/bwu_polymer_routing/bind_view.html'>
 
-<!-- These Polymer elements are used as views. 
+<!-- These Polymer elements are used as views.
      Polymer elements must be imported somewhere before they can be used -->
 <link rel='import' href='user_list.html'>
 <link rel='import' href='user_element.html'>
@@ -112,13 +112,13 @@ In your application package you should put the components somewhere in your `lib
       }
     </style>
 
-    <!-- Our app-element has no HTML content beside this view placeholder 
-         the view element configured for any top level route is added as 
+    <!-- Our app-element has no HTML content beside this view placeholder
+         the view element configured for any top level route is added as
          a child element to the <bind-view> element.
          The 'id' attribute was only added for debugging purposes and can
-         be omitted. --> 
+         be omitted. -->
     <bind-view id='app-element'></bind-view>
-    
+
   </template>
   <script type='application/dart' src='app_element.dart'></script>
 </polymer-element>
@@ -141,8 +141,8 @@ import 'package:bwu_polymer_routing/di.dart';
 // Register types for DI (dependency injection)
 class AppModule extends Module {
   AppModule() : super() {
-    // At first install the RoutingModule. 
-    // usePushState: true/false defines whether only the hash part (after #) 
+    // At first install the RoutingModule.
+    // usePushState: true/false defines whether only the hash part (after #)
     // should be used for routing (false) or the entire URL (true).
     //
     // Using `usePushState: true` requires server support otherwise resources
@@ -151,7 +151,7 @@ class AppModule extends Module {
     // with `usePushState: true` but you can't just reload the page because
     // the original URL of the page is not available anymore.
     install(new RoutingModule(usePushState: false));
-    
+
     // After installing the RoutingModule a your custom bindings.
     // The RoutInitializer class contains our custom router configuration.
     bindByKey(ROUTE_INITIALIZER_FN_KEY, toValue: new RouteInitializer());
@@ -159,8 +159,8 @@ class AppModule extends Module {
 }
 
 
-// 'with DIContent' applies a mixin that enables this Polymer element to serve 
-// DI requests for its child elements 
+// 'with DIContent' applies a mixin that enables this Polymer element to serve
+// DI requests for its child elements
 @CustomTag('app-element')
 class AppElement extends PolymerElement with DiContext {
   AppElement.created() : super.created();
@@ -170,11 +170,11 @@ class AppElement extends PolymerElement with DiContext {
 
     super.attached();
 
-    // Initialize the DI container. 
+    // Initialize the DI container.
     // We pass the element it should listen for di request events on
-    // and the DI configuration (AppModule). 
+    // and the DI configuration (AppModule).
     initDiContext(this, new ModuleInjector([new AppModule()]));
-    
+
     // NOTE: If an element is DiContext and DiConsumer at the same time
     // the `<content>` element should be passed to `initDiContext` otherwise
     // the element serves its own DI requests, which would lead ot endless loops.
@@ -198,24 +198,24 @@ class RouteInitializer implements Function {
 
       // 'userList' is the name of the route.
       'usersList': routeCfg(
-          // '/users' is the path element shown in the browsers URL bar when this 
+          // '/users' is the path element shown in the browsers URL bar when this
           // route is active.
           path: '/users',
           // The tag name for the view to create for this route.
           view: 'user-list',
           // Use this route when no specific route can be found for the current URL.
           defaultRoute: true,
-          // Don't recreate (remove/add) the view element but just pass the 
-          // updated parameter values to the existing view when the route stays 
+          // Don't recreate (remove/add) the view element but just pass the
+          // updated parameter values to the existing view when the route stays
           // the same as before but some route parameters have changed.
           dontLeaveOnParamChanges: true,
-          // When this route is choosen as default route, the view is created but 
+          // When this route is choosen as default route, the view is created but
           // the URL in the browsers URL bar doesn't reflect this.
           // Explicitely `go` to this route updates the URL in the address bar
-          // (maybe there is a better way to reach the same result).  
+          // (maybe there is a better way to reach the same result).
           enter: (route) => router.go('usersList', {})),
       'user': routeCfg(
-          // The ':userId' part gets assigned to the attribute named 'userId' 
+          // The ':userId' part gets assigned to the attribute named 'userId'
           // of the created view.
           path: '/user/:userId',
           view: 'user-element',
@@ -236,7 +236,7 @@ class RouteInitializer implements Function {
               view: 'article-element',
               // All parameters from this and all parent routes are
               // assigned to the view. If the view doesn't have an attribute
-              // that matches the route parameter name the assignment fails with 
+              // that matches the route parameter name the assignment fails with
               // an exception.
               // With bindParameters the set of parameters assigned to the view
               // can be limited.
@@ -248,10 +248,10 @@ class RouteInitializer implements Function {
               mount: {
             // These sub-routes don't create their own view but update the
             // status of the view of the parent route instead.
-            // In fact this isn't done automatically but needs some additional 
+            // In fact this isn't done automatically but needs some additional
             // code in the view itself (explained below).
-            // The implementation of the (parent) view would be easier when 
-            // these parts had been implemented as parameters instead of 
+            // The implementation of the (parent) view would be easier when
+            // these parts had been implemented as parameters instead of
             // sub-routes.
             'view': routeCfg(
                 path: '/view',
@@ -270,7 +270,7 @@ class RouteInitializer implements Function {
 
 ###example/src/example_01/components/user_element.html
 
-The `<user-element>` is a view that is shown inside the `<app-element>` and is itself a container for other views.  
+The `<user-element>` is a view that is shown inside the `<app-element>` and is itself a container for other views.
 According to the route configuration it can contain the view for the `user.articleList` route.
 
 To support this two lines are required:
@@ -278,7 +278,7 @@ To support this two lines are required:
 ```HTML
 <link rel='import' href='../../../packages/bwu_polymer_routing/bind_view.html'>
 ...
-<bind-view id="user_element"></bind-view> 
+<bind-view id="user_element"></bind-view>
 <!-- the id is again only for debugging purposes and can be omitted -->
 ```
 
@@ -288,7 +288,7 @@ The `<user-element>` also contains a link to the `userList` route.
 <a href='#' on-click="{{routePath}}" route-path='usersList'>users</a>
 ```
 
-`routePath` is a helper method provided by the `DiConsumer` mixin.   
+`routePath` is a helper method provided by the `DiConsumer` mixin.
 To make it available we need to apply the mixin to the `UserElement` class (in the `user_element.dart` file) as shown below.
 `routePath` is an event handler that routes to the route defined in the `route-path` attribute (`userList` in this case).
 
@@ -303,16 +303,16 @@ import 'package:polymer/polymer.dart';
 import 'package:bwu_polymer_routing/di.dart' as di;
 
 @CustomTag('user-element')
-// `with di.DiConsumer` applies the DiConsumer mixin and makes some additional 
+// `with di.DiConsumer` applies the DiConsumer mixin and makes some additional
 // helper methods for routing and DI available.
 class UserElement extends PolymerElement with di.DiConsumer {
   UserElement.created() : super.created();
 
-  // The route configuration (in route_initialized.dart) defines a `userId` 
+  // The route configuration (in route_initialized.dart) defines a `userId`
   // routing parameter for the `user` route.
-  // The actual value for the `userId` route parameter is assigned automatically 
+  // The actual value for the `userId` route parameter is assigned automatically
   // to a field in the view with a matching name when the view is created or when
-  // the parameter value changes.  
+  // the parameter value changes.
   @published String userId;
 }
 ```
@@ -329,16 +329,16 @@ Uses `<template repeat='...'>` to create a list of links (one for each user) tha
     route-param-name="userId"
     route-param-value="{{user}}">{{user}}</a></li>
   </template>
-```       
-`routePath` is the same helper method provided by the `DiConsumer` and the `route-path` attribute defines that the link should navigate to the `user.articleList` route (as already shown in the `<user-element>` above).  
+```
+`routePath` is the same helper method provided by the `DiConsumer` and the `route-path` attribute defines that the link should navigate to the `user.articleList` route (as already shown in the `<user-element>` above).
 
-In addition to a specific route we want to pass an `userId` argument because we want to see the `<user-element>` and the `<article-list>` for a specific user when we click one of these links.  
-This is done by a pair of attributes `route-param-name` and `route-param-value`.  
-Here for each link the actual `user` value is passed as `userId` route parameter.  
+In addition to a specific route we want to pass an `userId` argument because we want to see the `<user-element>` and the `<article-list>` for a specific user when we click one of these links.
+This is done by a pair of attributes `route-param-name` and `route-param-value`.
+Here for each link the actual `user` value is passed as `userId` route parameter.
 
-It is supported to add more than one route parameter by adding an arbitrary suffix to the attribute name. 
-The only requirement is that there is a pair with matching suffixes. 
-A second parameter could be passed with `route-param-name-x2='birthDate'` and `route-param-value-x2='01/01/1985`. 
+It is supported to add more than one route parameter by adding an arbitrary suffix to the attribute name.
+The only requirement is that there is a pair with matching suffixes.
+A second parameter could be passed with `route-param-name-x2='birthDate'` and `route-param-value-x2='01/01/1985`.
 In this example there is a `route-param-name`/`route-param-value` attribute pair with the matching suffix `-x2`.
 
 
@@ -348,7 +348,7 @@ The `UserList` class doesn't contain anything new. Only the `DiConsumer` mixin i
 
 
 ###example/src/example_01/components/article_element.html
-  
+
 The `<article-element>` offers a few new things.
 
 ```html
@@ -379,15 +379,15 @@ import 'package:route_hierarchical/client.dart' as rt;
 import 'package:bwu_polymer_routing/di.dart' as di;
 
 @CustomTag('article-element')
-// The DiConsumer mixin is used to provide the `inject` and `parentRoute` methods. 
+// The DiConsumer mixin is used to provide the `inject` and `parentRoute` methods.
 class ArticleElement extends PolymerElement with di.DiConsumer {
   ArticleElement.created() : super.created();
 
-  // articleId and userId are passed in when the view is created/updated on a 
+  // articleId and userId are passed in when the view is created/updated on a
   //route change
   @observable String articleId;
   @observable String userId;
-  
+
   // isEditMode is updated by code below.
   @observable bool isEditMode = false;
 
@@ -432,7 +432,7 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
     if(router == null) {
       _requestDependencies();
     }
-  
+
     // This line sends the DI request for two different types.
     var di = inject(this, [RouteProvider, rt.Router]);
     // Here we take the values from the result.
@@ -460,7 +460,7 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
 
 ###Summary
 
-I hope this helps you to get started with Polymer, routing and DI.  
+I hope this helps you to get started with Polymer, routing and DI.
 
 Any suggestions for improvements are greatly appreciated. [Just create an issue in the GitHub repository](https://github.com/bwu-dart/bwu_polymer_routing/issues/new)
 
