@@ -1,5 +1,7 @@
+.idea/
+atlassian-ide-plugin.xml
 packages
-build
+build/
 .pub/
 #pubspec.lock
 .project
