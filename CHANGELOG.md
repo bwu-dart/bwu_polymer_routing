@@ -1,4 +1,4 @@
-##0.0.3
+##0.0.4
 widen dependency constraints on core_elements, paper_elements
 
 ##0.0.3
