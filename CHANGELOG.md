@@ -1,4 +1,7 @@
 ##0.0.3
+widen dependency constraints on core_elements, paper_elements
+
+##0.0.3
 widen dependency constraints on Polymer, route_hierarchical
 
 ##0.0.2
