@@ -1,7 +1,7 @@
 library bwu_polymer_routing.bind_view;
 
 import 'dart:html' as dom;
-import 'dart:async' as async;
+import 'dart:async' show Future, StreamSubscription;
 import 'dart:collection' as coll;
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:bwu_polymer_routing/module.dart'
@@ -30,19 +30,19 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
   }
 
   void _init() {
-    new async.Future(() {
+    new Future(() {
       var di = inject(this, [rt.Router, RoutingHelper]);
-        rt.Router router = di[rt.Router];
-        _locationService = di[RoutingHelper];
-        _appInjector = new ModuleInjector([new Module()
-            ..bind(RouteProvider, toValue: this)], (di[Injector] as Injector));
-        RouteProvider routeProvider = (di[Injector]as Injector).get(RouteProvider);
+      rt.Router router = di[rt.Router];
+      _locationService = di[RoutingHelper];
+      _appInjector = new ModuleInjector([new Module()
+          ..bind(RouteProvider, toValue: this)], (di[Injector] as Injector));
+      RouteProvider routeProvider = (di[Injector]as Injector).get(RouteProvider);
 
-        routeHandle = routeProvider != null ?
-            routeProvider.route.newHandle() :
-              router.root.newHandle();
-        _locationService.registerPortal(this);
-        maybeReloadViews();
+      routeHandle = routeProvider != null ?
+          routeProvider.route.newHandle() :
+            router.root.newHandle();
+      _locationService.registerPortal(this);
+      maybeReloadViews();
 
       initDiContext($['content'], _appInjector);
     });
@@ -73,7 +73,7 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
     }
     _viewRoute = route;
 
-    async.StreamSubscription _leaveSubscription;
+    StreamSubscription _leaveSubscription;
     _leaveSubscription = route.onLeave.listen((_) {
       _leaveSubscription.cancel();
       _leaveSubscription = null;

@@ -1,5 +1,6 @@
 part of bwu_polymer_routing.module;
 
+
 /**
  * A factory of route to template bindings.
  */
@@ -71,6 +72,7 @@ class RouteViewFactory {
   }
 }
 
+
 RouteCfg routeCfg({String path, String view,
     Map<String, RouteCfg> mount, modules(), bool defaultRoute: false,
     rt.RoutePreEnterEventHandler preEnter, rt.RouteEnterEventHandler enter,
@@ -78,6 +80,7 @@ RouteCfg routeCfg({String path, String view,
         new RouteCfg(path: path, view: view, mount: mount,
             modules: modules, defaultRoute: defaultRoute, preEnter: preEnter,
             preLeave: preLeave, enter: enter, leave: leave, bindParameters: bindParameters, dontLeaveOnParamChanges: dontLeaveOnParamChanges);
+
 
 class RouteCfg {
   final String path;
@@ -107,6 +110,7 @@ class RouteCfg {
  * instantiated but before [NgBindRouteDirective] and [NgViewDirective].
  */
 typedef void RouteInitializerFn(rt.Router router, RouteViewFactory viewFactory);
+
 
 /**
  * A singleton helper service that handles routing initialization, global
@@ -178,6 +182,7 @@ class RoutingHelper {
   }
 }
 
+
 class View {
   final String template;
   final List<di.Module> modules;
@@ -185,6 +190,7 @@ class View {
 
   View(this.template, this.modules, this.bindParameters);
 }
+
 
 String _routePath(rt.Route route) {
   final path = [];
@@ -195,6 +201,7 @@ String _routePath(rt.Route route) {
   }
   return path.join('.');
 }
+
 
 int _routeDepth(rt.Route route) {
   var depth = 0;

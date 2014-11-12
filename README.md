@@ -17,13 +17,10 @@ Add the following dependency and transformers configuration to your `pubspec.yam
 
 ```yaml
 dependencies:
-  polymer: '>=0.12.0+7 <0.13.0'
+  polymer: '>=0.12.0+7 <0.16.0'
   bwu_polymer_routing: '>=0.0.1 <0.1.0'
-  route_hierarchical: '>=0.4.21 <0.5.0'
-  di: '>=2.0.1 <2.1.0'
-
-dependency_overrides:
-  code_transformers: '>=0.2.0 <0.3.0' # necessary until di 2.0.2 is published
+  route_hierarchical: '>=0.4.21 <0.6.0'
+  di: '>=2.0.1 <4.0.0'
 
 transformers:
 - polymer:

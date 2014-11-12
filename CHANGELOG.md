@@ -1,3 +1,9 @@
+##0.1.0
+- bump version because the package seems to work pretty good already
+- widen dependency constraints on DI
+- add some more codedoc comments
+- add logging
+
 ##0.0.4
 widen dependency constraints on core_elements, paper_elements
 

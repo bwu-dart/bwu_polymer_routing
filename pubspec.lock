@@ -28,7 +28,7 @@ packages:
   core_elements:
     description: core_elements
     source: hosted
-    version: "0.3.2"
+    version: "0.4.0+4"
   csslib:
     description: csslib
     source: hosted
@@ -56,7 +56,7 @@ packages:
   paper_elements:
     description: paper_elements
     source: hosted
-    version: "0.4.2"
+    version: "0.5.0"
   path:
     description: path
     source: hosted
@@ -64,11 +64,11 @@ packages:
   polymer:
     description: polymer
     source: hosted
-    version: "0.15.1+1"
+    version: "0.15.1+3"
   polymer_expressions:
     description: polymer_expressions
     source: hosted
-    version: "0.12.0+1"
+    version: "0.13.0"
   pool:
     description: pool
     source: hosted
@@ -80,7 +80,7 @@ packages:
   route_hierarchical:
     description: route_hierarchical
     source: hosted
-    version: "0.5.0"
+    version: "0.6.1"
   smoke:
     description: smoke
     source: hosted
@@ -100,11 +100,11 @@ packages:
   string_scanner:
     description: string_scanner
     source: hosted
-    version: "0.1.0"
+    version: "0.1.2"
   template_binding:
     description: template_binding
     source: hosted
-    version: "0.12.1"
+    version: "0.13.1"
   utf:
     description: utf
     source: hosted
