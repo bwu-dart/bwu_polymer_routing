@@ -1,3 +1,6 @@
+##0.1.1+1
+- remove pubspec.lock from Git repo
+
 ##0.1.1
 - Widen dependency constraints on core- and paper-elements and move these.
 dependencies to `dev_dependencies`.
