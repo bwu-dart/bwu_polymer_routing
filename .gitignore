@@ -3,7 +3,7 @@ atlassian-ide-plugin.xml
 packages
 build/
 .pub/
-#pubspec.lock
+pubspec.lock
 .project
 .buildlog
 .settings
