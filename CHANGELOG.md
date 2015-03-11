@@ -1,3 +1,7 @@
+##0.1.2
+- use dartformat on all source files
+- upgrade to Polymer 0.16.0
+
 ##0.1.1+1
 - remove pubspec.lock from Git repo
 

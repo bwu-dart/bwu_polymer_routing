@@ -6,7 +6,6 @@ import 'package:bwu_polymer_routing/module.dart';
 class RouteInitializer implements Function {
   void call(rt.Router router, RouteViewFactory views) {
     views.configure({
-
       'usersList': routeCfg(
           path: '/users',
           view: 'user-list',
@@ -34,9 +33,7 @@ class RouteInitializer implements Function {
                 path: '/view',
                 defaultRoute: true,
                 dontLeaveOnParamChanges: true),
-            'edit': routeCfg(
-                path: '/edit',
-                dontLeaveOnParamChanges: true)
+            'edit': routeCfg(path: '/edit', dontLeaveOnParamChanges: true)
           })
         })
       })

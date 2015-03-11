@@ -9,5 +9,10 @@ class ArticleList extends PolymerElement with di.DiConsumer {
 
   @observable String userId;
 
-  var articles = ['Soap', 'Knife', 'The Dark Knight Blu-Ray', 'Wine Bordeau 0.7L'];
+  var articles = [
+    'Soap',
+    'Knife',
+    'The Dark Knight Blu-Ray',
+    'Wine Bordeau 0.7L'
+  ];
 }

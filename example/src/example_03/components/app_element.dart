@@ -4,8 +4,7 @@ import 'dart:html' as dom;
 import 'dart:js' as js;
 import 'package:polymer/polymer.dart';
 import 'package:di/di.dart' show Module, ModuleInjector;
-import 'package:bwu_polymer_routing/module.dart'
-    show RoutingModule;
+import 'package:bwu_polymer_routing/module.dart' show RoutingModule;
 import 'package:bwu_polymer_routing/static_keys.dart';
 import '../route_initializer.dart';
 import 'package:bwu_polymer_routing/di.dart' as di;
@@ -26,12 +25,10 @@ class AppElement extends PolymerElement with di.DiContext, di.DiConsumer {
 
   @override
   void attached() {
-
     super.attached();
 
     initDiContext(this, new ModuleInjector([new AppModule()]));
   }
-
 
   void overviewSelectHandler(dom.MouseEvent e) {
     var item = (e.target as CoreItem);
@@ -40,7 +37,7 @@ class AppElement extends PolymerElement with di.DiContext, di.DiConsumer {
 
   void menuSelectHandler(dom.CustomEvent e) {
     var detail = new js.JsObject.fromBrowserObject(e)['detail'];
-    if(detail['isSelected']) {
+    if (detail['isSelected']) {
       var item = (detail['item'] as CoreItem);
       selectedMenuLabel = item.label;
       goPathFromAttributes(item);

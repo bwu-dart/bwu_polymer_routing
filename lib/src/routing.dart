@@ -1,6 +1,5 @@
 part of bwu_polymer_routing.module;
 
-
 /**
  * A factory of route to template bindings.
  */
@@ -13,9 +12,9 @@ class RouteViewFactory {
       (rt.RouteEnterEvent event) => _enterHandler(event, templateUrl);
 
   void _enterHandler(rt.RouteEnterEvent event, String templateUrl,
-                     {List<di.Module> modules, List<String> bindParameters}) {
-    locationService._route(event.route, templateUrl, fromEvent: true,
-        modules: modules, bindParameters: bindParameters);
+      {List<di.Module> modules, List<String> bindParameters}) {
+    locationService._route(event.route, templateUrl,
+        fromEvent: true, modules: modules, bindParameters: bindParameters);
   }
 
   void configure(Map<String, RouteCfg> config) {
@@ -32,55 +31,58 @@ class RouteViewFactory {
           path: cfg.path,
           defaultRoute: cfg.defaultRoute,
           enter: (rt.RouteEnterEvent e) {
-            if (cfg.view != null) {
-              _enterHandler(e, cfg.view,
-                  modules: newModules, bindParameters: cfg.bindParameters);
-            }
-            if (cfg.enter != null) {
-              cfg.enter(e);
-            }
-          },
-          preEnter: (rt.RoutePreEnterEvent e) {
-            if (cfg.modules != null && !modulesCalled) {
-              modulesCalled = true;
-              var modules = cfg.modules();
-              if (modules is async.Future) {
-                e.allowEnter(modules.then((List<di.Module> m) {
-                  newModules = m;
-                  return true;
-                }));
-              } else {
-                newModules = modules;
-              }
-            }
-            if (cfg.preEnter != null) {
-              cfg.preEnter(e);
-            }
-          },
-          preLeave: (rt.RoutePreLeaveEvent e) {
-            if (cfg.preLeave != null) {
-              cfg.preLeave(e);
-            }
-          },
-          leave: cfg.leave,
-          mount: (rt.Route mountRoute) {
-            if (cfg.mount != null) {
-              _configure(mountRoute, cfg.mount);
-            }
-          });
+        if (cfg.view != null) {
+          _enterHandler(e, cfg.view,
+              modules: newModules, bindParameters: cfg.bindParameters);
+        }
+        if (cfg.enter != null) {
+          cfg.enter(e);
+        }
+      }, preEnter: (rt.RoutePreEnterEvent e) {
+        if (cfg.modules != null && !modulesCalled) {
+          modulesCalled = true;
+          var modules = cfg.modules();
+          if (modules is async.Future) {
+            e.allowEnter(modules.then((List<di.Module> m) {
+              newModules = m;
+              return true;
+            }));
+          } else {
+            newModules = modules;
+          }
+        }
+        if (cfg.preEnter != null) {
+          cfg.preEnter(e);
+        }
+      }, preLeave: (rt.RoutePreLeaveEvent e) {
+        if (cfg.preLeave != null) {
+          cfg.preLeave(e);
+        }
+      }, leave: cfg.leave, mount: (rt.Route mountRoute) {
+        if (cfg.mount != null) {
+          _configure(mountRoute, cfg.mount);
+        }
+      });
     });
   }
 }
 
-
-RouteCfg routeCfg({String path, String view,
-    Map<String, RouteCfg> mount, modules(), bool defaultRoute: false,
-    rt.RoutePreEnterEventHandler preEnter, rt.RouteEnterEventHandler enter,
-    rt.RoutePreLeaveEventHandler preLeave, rt.RouteLeaveEventHandler leave, List<String> bindParameters, bool dontLeaveOnParamChanges: false}) =>
-        new RouteCfg(path: path, view: view, mount: mount,
-            modules: modules, defaultRoute: defaultRoute, preEnter: preEnter,
-            preLeave: preLeave, enter: enter, leave: leave, bindParameters: bindParameters, dontLeaveOnParamChanges: dontLeaveOnParamChanges);
-
+RouteCfg routeCfg({String path, String view, Map<String, RouteCfg> mount,
+    modules(), bool defaultRoute: false, rt.RoutePreEnterEventHandler preEnter,
+    rt.RouteEnterEventHandler enter, rt.RoutePreLeaveEventHandler preLeave,
+    rt.RouteLeaveEventHandler leave, List<String> bindParameters,
+    bool dontLeaveOnParamChanges: false}) => new RouteCfg(
+    path: path,
+    view: view,
+    mount: mount,
+    modules: modules,
+    defaultRoute: defaultRoute,
+    preEnter: preEnter,
+    preLeave: preLeave,
+    enter: enter,
+    leave: leave,
+    bindParameters: bindParameters,
+    dontLeaveOnParamChanges: dontLeaveOnParamChanges);
 
 class RouteCfg {
   final String path;
@@ -96,11 +98,11 @@ class RouteCfg {
   final bool dontLeaveOnParamChanges;
 
   RouteCfg({this.view, this.path, this.mount, this.modules, this.defaultRoute,
-      this.enter, this.preEnter, this.preLeave, this.leave, this.bindParameters, this.dontLeaveOnParamChanges: false}) {
+      this.enter, this.preEnter, this.preLeave, this.leave, this.bindParameters,
+      this.dontLeaveOnParamChanges: false}) {
     assert(dontLeaveOnParamChanges != null);
   }
 }
-
 
 /**
  * An typedef that must be implemented by the user of routing library and
@@ -110,7 +112,6 @@ class RouteCfg {
  * instantiated but before [NgBindRouteDirective] and [NgViewDirective].
  */
 typedef void RouteInitializerFn(rt.Router router, RouteViewFactory viewFactory);
-
 
 /**
  * A singleton helper service that handles routing initialization, global
@@ -122,15 +123,19 @@ class RoutingHelper {
   final _portals = <BindView>[];
   final _templates = <String, View>{};
 
-  RoutingHelper(di.Injector injector, this.router /*,
-                  this._ngApp*/) {
+  RoutingHelper(di.Injector injector,
+      this.router /*,
+                  this._ngApp*/
+      ) {
     // TODO: move this to constructor parameters when di issue is fixed:
     // https://github.com/angular/di.dart/issues/40
-    RouteInitializerFn initializerFn = injector.getByKey(ROUTE_INITIALIZER_FN_KEY);
+    RouteInitializerFn initializerFn =
+        injector.getByKey(ROUTE_INITIALIZER_FN_KEY);
     if (initializerFn == null) {
       dom.window.console.error('No RouteInitializer implementation provided.');
       return;
-    };
+    }
+    ;
 
     if (initializerFn != null) {
       initializerFn(router, new RouteViewFactory(this));
@@ -169,7 +174,8 @@ class RoutingHelper {
     }
   }
 
-  void _route(rt.Route route, String template, {bool fromEvent, List<di.Module> modules, List<String> bindParameters}) {
+  void _route(rt.Route route, String template,
+      {bool fromEvent, List<di.Module> modules, List<String> bindParameters}) {
     _templates[_routePath(route)] = new View(template, modules, bindParameters);
   }
 
@@ -182,7 +188,6 @@ class RoutingHelper {
   }
 }
 
-
 class View {
   final String template;
   final List<di.Module> modules;
@@ -190,7 +195,6 @@ class View {
 
   View(this.template, this.modules, this.bindParameters);
 }
-
 
 String _routePath(rt.Route route) {
   final path = [];
@@ -201,7 +205,6 @@ String _routePath(rt.Route route) {
   }
   return path.join('.');
 }
-
 
 int _routeDepth(rt.Route route) {
   var depth = 0;

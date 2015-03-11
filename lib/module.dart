@@ -138,8 +138,10 @@ part 'src/route_provider.dart';
 
 class RoutingModule extends di.Module {
   RoutingModule({bool usePushState: true}) : super() {
-    bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(usePushState == true));
-    bind(rt.Router, toFactory: (NgRoutingUsePushState state, dom.Window window) {
+    bind(NgRoutingUsePushState,
+        toValue: new NgRoutingUsePushState.value(usePushState == true));
+    bind(rt.Router,
+        toFactory: (NgRoutingUsePushState state, dom.Window window) {
       var useFragment = !state.usePushState;
       return new rt.Router(useFragment: useFragment, windowImpl: window);
     }, inject: [PM_ROUTING_USE_PUSH_STATE_KEY, WINDOW_KEY]);
@@ -162,6 +164,6 @@ class RoutingModule extends di.Module {
 @Injectable()
 class NgRoutingUsePushState {
   final bool usePushState;
-  NgRoutingUsePushState(): usePushState = true;
+  NgRoutingUsePushState() : usePushState = true;
   NgRoutingUsePushState.value(this.usePushState);
 }

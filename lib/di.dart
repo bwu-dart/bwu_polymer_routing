@@ -8,6 +8,7 @@ import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
 import 'package:route_hierarchical/client.dart' as rt;
 
 import 'package:logging/logging.dart' show Logger;
+
 final _log = new Logger('bwu_polymer_routing.di');
 
 /**
@@ -53,10 +54,8 @@ class DiConsumer {
   /// It returns a map where the requested [Type] is associated with the value
   /// resolved resolved by DI.
   Map<Type, dynamic> inject(dom.Element host, [List<Type> types]) {
-    var event =
-        new dom.CustomEvent(
-            'bwu-polymer-di',
-            detail: new Map.fromIterable(types, value: (t) => null));
+    var event = new dom.CustomEvent('bwu-polymer-di',
+        detail: new Map.fromIterable(types, value: (t) => null));
     host.dispatchEvent(event);
 
     if (event.defaultPrevented) {
@@ -78,7 +77,8 @@ class DiConsumer {
       var di = inject(host, [RouteProvider, rt.Router]);
       _router = (di[rt.Router] as rt.Router);
       _routeProvider = (di[RouteProvider]) as RouteProvider;
-      _log.finest('_injectRouter got _router: ${_router}, _routeProvider: ${_routeProvider}.');
+      _log.finest(
+          '_injectRouter got _router: ${_router}, _routeProvider: ${_routeProvider}.');
     }
   }
 
@@ -92,8 +92,7 @@ class DiConsumer {
     if (_router == null) return new async.Future.value();
 
     return _router.go(
-        routeToPath(_routeProvider.route.parent),
-        _routeProvider.parameters);
+        routeToPath(_routeProvider.route.parent), _routeProvider.parameters);
   }
 
   /// Similar to [goParentRoute] but has a method signature so it can
@@ -105,13 +104,15 @@ class DiConsumer {
 
   /// Navigate to the defined [routePath] and apply the passed [parameters].
   /// The return value indicates whether the navigation was successful.
-  async.Future<bool> goPath(dom.Element host, String routePath, {Map<String,String> parameters : const {}}) {
+  async.Future<bool> goPath(dom.Element host, String routePath,
+      {Map<String, String> parameters: const {}}) {
     _injectRouter(host);
-    _log.finest('goPath(): routePath: ${routePath}, activePath.length: ${_router.activePath.length}');
-    return _router.go(
-        routePath,
-        _router.activePath.isEmpty ? parameters :
-            (_router.activePath[_router.activePath.length -1].parameters..addAll(parameters)));
+    _log.finest(
+        'goPath(): routePath: ${routePath}, activePath.length: ${_router.activePath.length}');
+    return _router.go(routePath, _router.activePath.isEmpty
+        ? parameters
+        : (_router.activePath[_router.activePath.length - 1].parameters
+      ..addAll(parameters)));
   }
 
   /// Navigate to the path specified by element attributes and apply parameters specified
@@ -127,15 +128,15 @@ class DiConsumer {
     Map additionalParameters = {};
     host.attributes.forEach((k, v) {
       if (k.startsWith('route-param-name')) {
-        additionalParameters[v] =
-            host.attributes['route-param-value${k.substring('route-param-name'.length)}'];
+        additionalParameters[v] = host.attributes[
+            'route-param-value${k.substring('route-param-name'.length)}'];
       }
     });
 
     if (additionalParameters == null) additionalParameters = {};
-    return _router.go(
-        routePath,
-        _router.activePath[_router.activePath.length -1].parameters..addAll(additionalParameters));
+    return _router.go(routePath,
+        _router.activePath[_router.activePath.length - 1].parameters
+      ..addAll(additionalParameters));
   }
 
   /// Similar to [goPathFromAttributes] but has a method signature so it can

@@ -5,14 +5,14 @@ import 'dart:async' show Future, StreamSubscription;
 import 'dart:collection' as coll;
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:bwu_polymer_routing/module.dart'
-  show RouteProvider, RoutingHelper, View, RouteHandle;
+    show RouteProvider, RoutingHelper, View, RouteHandle;
 import 'package:polymer/polymer.dart';
 import 'package:di/di.dart' show Injector, Module, ModuleInjector;
 import 'package:bwu_polymer_routing/di.dart';
 
-
 @CustomTag('bind-view')
-class BindView extends PolymerElement with DiContext, DiConsumer implements RouteProvider {
+class BindView extends PolymerElement with DiContext, DiConsumer
+    implements RouteProvider {
   BindView.created() : super.created();
 
   RoutingHelper _locationService;
@@ -34,13 +34,15 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
       var di = inject(this, [rt.Router, RoutingHelper]);
       rt.Router router = di[rt.Router];
       _locationService = di[RoutingHelper];
-      _appInjector = new ModuleInjector([new Module()
-          ..bind(RouteProvider, toValue: this)], (di[Injector] as Injector));
-      RouteProvider routeProvider = (di[Injector]as Injector).get(RouteProvider);
+      _appInjector = new ModuleInjector([
+        new Module()..bind(RouteProvider, toValue: this)
+      ], (di[Injector] as Injector));
+      RouteProvider routeProvider =
+          (di[Injector] as Injector).get(RouteProvider);
 
-      routeHandle = routeProvider != null ?
-          routeProvider.route.newHandle() :
-            router.root.newHandle();
+      routeHandle = routeProvider != null
+          ? routeProvider.route.newHandle()
+          : router.root.newHandle();
       _locationService.registerPortal(this);
       maybeReloadViews();
 
@@ -49,14 +51,15 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
   }
 
   void maybeReloadViews() {
-     if (routeHandle.isActive) _locationService.reloadViews(startingFrom: routeHandle);
-   }
+    if (routeHandle.isActive) _locationService.reloadViews(
+        startingFrom: routeHandle);
+  }
 
   @override
   void detached() {
     routeHandle.discard();
-        _locationService.unregisterPortal(this);
-        _cleanUp();
+    _locationService.unregisterPortal(this);
+    _cleanUp();
 
     super.detached();
   }
@@ -94,24 +97,25 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
   List _dynamicBindings = [];
 
   void _createParameterBindings(View viewDef) {
-    if(parameters != null) {
+    if (parameters != null) {
       try {
-      if(viewDef.bindParameters != null) {
-        viewDef.bindParameters.forEach((k) {
-          //print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
-          _dynamicBindings.add((_viewElement as PolymerElement)
-            .bindProperty(new Symbol(k), new PathObserver(this, 'parameters.${k}')));
-        });
-      } else {
-        parameters.keys.forEach((k) {
-          //print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
-          _dynamicBindings.add((_viewElement as PolymerElement)
-            .bindProperty(new Symbol(k), new PathObserver(this, 'parameters.${k}')));
-        });
-      }
+        if (viewDef.bindParameters != null) {
+          viewDef.bindParameters.forEach((k) {
+            //print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
+            _dynamicBindings.add((_viewElement as PolymerElement).bindProperty(
+                new Symbol(k), new PathObserver(this, 'parameters.${k}')));
+          });
+        } else {
+          parameters.keys.forEach((k) {
+            //print('bind-view id ${id} - view ${viewDef.template}, parameter: ${k}');
+            _dynamicBindings.add((_viewElement as PolymerElement).bindProperty(
+                new Symbol(k), new PathObserver(this, 'parameters.${k}')));
+          });
+        }
       } catch (e, s) {
         print('$e\n$s');
-        print('Use routeCfg "bindParameters" option to limit the parameters bound to the view element.');
+        print(
+            'Use routeCfg "bindParameters" option to limit the parameters bound to the view element.');
       }
     }
   }
@@ -137,7 +141,7 @@ class BindView extends PolymerElement with DiContext, DiConsumer implements Rout
     var res = new coll.HashMap<String, String>();
     var p = _viewRoute;
     while (p != null) {
-      if(p.parameters != null) {
+      if (p.parameters != null) {
         res.addAll(p.parameters);
       }
       p = p.parent;

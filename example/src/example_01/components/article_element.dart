@@ -35,7 +35,7 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
     router = null;
     route = null;
     new async.Future(() {
-      if(router != null) {
+      if (router != null) {
         // prevent repeated execution when
         // attached, articleIdChanged, userIdChanged fire succinctly.
         return;
@@ -52,17 +52,17 @@ class ArticleElement extends PolymerElement with di.DiConsumer {
   }
 
   void toggleEdit(e) {
-    if(router == null) {
+    if (router == null) {
       _requestDependencies();
     }
-    if(route.findRoute('view').isActive) {
-      router.go('${routeToPath(route)}.edit', route.parameters)
-      .then((success) {
-        if(success) isEditMode = true;
+    if (route.findRoute('view').isActive) {
+      router.go('${routeToPath(route)}.edit', route.parameters).then((success) {
+        if (success) isEditMode = true;
       });
     } else {
-      router.go('${routeToPath(route)}.view', route.parameters)
-      .then((success) => isEditMode = false);
+      router
+          .go('${routeToPath(route)}.view', route.parameters)
+          .then((success) => isEditMode = false);
     }
   }
 }
