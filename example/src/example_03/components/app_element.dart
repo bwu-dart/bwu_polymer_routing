@@ -31,7 +31,7 @@ class AppElement extends PolymerElement with di.DiContext, di.DiConsumer {
   }
 
   void overviewSelectHandler(dom.MouseEvent e) {
-    var item = (e.target as CoreItem);
+//    var item = (e.target as CoreItem);
     ($['main-menu'] as CoreMenu).selected = 0;
   }
 

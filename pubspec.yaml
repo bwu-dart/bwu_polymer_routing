@@ -5,14 +5,21 @@ description: Some helper classes and components to use route_hierarchical with P
 homepage: https://github.com/bwu-dart/bwu_polymer_routing
 environment:
   sdk: '>=1.7.0'
+
 dependencies:
   di: '>=3.3.2 <5.0.0'
   polymer: '>=0.12.0+7 <0.17.0'
   route_hierarchical: '>=0.4.21 <0.7.0'
 
 dev_dependencies:
-  core_elements: '>=0.1.1+2 <0.7.0'
-  paper_elements: '>=0.1.0+2 <0.7.0'
+  bwu_utils_dev: '>=0.1.0-dev.9 <0.2.0'
+  core_elements: '>=0.1.1+2 <0.8.0'
+  paper_elements: '>=0.1.0+2 <0.8.0'
+  test: '>=0.12.2 <0.13.0'
+
+dependency_overrides:
+  analyzer: '>=0.25.0 <0.26.0' # just to guide pub
+#  args: '>=0.13.1 <0.14.0'
 
 transformers:
 - polymer:

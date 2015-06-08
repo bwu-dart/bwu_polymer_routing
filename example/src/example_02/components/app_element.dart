@@ -4,7 +4,7 @@ import 'package:polymer/polymer.dart';
 import 'package:di/di.dart' show Module, ModuleInjector;
 import 'package:bwu_polymer_routing/module.dart' show RoutingModule;
 import 'package:bwu_polymer_routing/static_keys.dart';
-import '../../example_01/route_initializer.dart';
+import '../route_initializer.dart';
 import 'package:bwu_polymer_routing/di.dart';
 
 class AppModule extends Module {

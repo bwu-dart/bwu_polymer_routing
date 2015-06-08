@@ -1,5 +1,10 @@
 #BWU Polymer Routing
 
+[![Star this Repo](https://img.shields.io/github/stars/bwu-dart/bwu_polymer_routing.svg?style=flat)](https://github.com/bwu-dart/bwu_polymer_routing)
+[![Pub Package](https://img.shields.io/pub/v/bwu_polymer_routing.svg?style=flat)](https://pub.dartlang.org/packages/bwu_polymer_routing)
+[![Build Status](https://travis-ci.org/bwu-dart/bwu_polymer_routing.svg?branch=travis)](https://travis-ci.org/bwu-dart/bwu_polymer_routing)
+[![Coverage Status](https://coveralls.io/repos/bwu-dart/bwu_polymer_routing/badge.svg)](https://coveralls.io/r/bwu-dart/bwu_polymer_routing)
+
 Some helper classes and components to use the [route_hierarchical package](http://pub.dartlang.org/packages/route_hierarchical) (used by Angular.dart) with Polymer.dart.
 
 I put a simple example online.
@@ -17,10 +22,10 @@ Add the following dependency and transformers configuration to your `pubspec.yam
 
 ```yaml
 dependencies:
-  polymer: '>=0.12.0+7 <0.16.0'
-  bwu_polymer_routing: '>=0.0.1 <0.1.0'
-  route_hierarchical: '>=0.4.21 <0.6.0'
-  di: '>=2.0.1 <4.0.0'
+  polymer: '^0.16.0'
+  bwu_polymer_routing: '^0.1.2'
+  route_hierarchical: '^0.6.0'
+  di: '^3.3.4'
 
 transformers:
 - polymer:

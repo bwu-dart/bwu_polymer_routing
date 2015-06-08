@@ -160,7 +160,7 @@ class RoutingHelper {
     for (rt.Route route in activePath) {
       var viewDef = _templates[_routePath(route)];
       if (viewDef == null) continue;
-      var templateUrl = viewDef.template;
+//      var templateUrl = viewDef.template;
 
       BindView view = _portals.lastWhere((BindView v) {
         return _routePath(route) != _routePath(v.routeHandle) &&
