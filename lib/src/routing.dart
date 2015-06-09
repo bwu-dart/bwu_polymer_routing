@@ -1,8 +1,6 @@
 part of bwu_polymer_routing.module;
 
-/**
- * A factory of route to template bindings.
- */
+/// A factory of route to template bindings.
 class RouteViewFactory {
   RoutingHelper locationService;
 
@@ -104,19 +102,15 @@ class RouteCfg {
   }
 }
 
-/**
- * An typedef that must be implemented by the user of routing library and
- * should include the route initialization.
- *
- * The function will be called by the framework once the router is
- * instantiated but before [NgBindRouteDirective] and [NgViewDirective].
- */
+/// An typedef that must be implemented by the user of routing library and
+/// should include the route initialization.
+///
+/// The function will be called by the framework once the router is
+/// instantiated but before [NgBindRouteDirective] and [NgViewDirective].
 typedef void RouteInitializerFn(rt.Router router, RouteViewFactory viewFactory);
 
-/**
- * A singleton helper service that handles routing initialization, global
- * events and view registries.
- */
+/// A singleton helper service that handles routing initialization, global
+/// events and view registries.
 @Injectable()
 class RoutingHelper {
   final rt.Router router;
@@ -135,7 +129,6 @@ class RoutingHelper {
       dom.window.console.error('No RouteInitializer implementation provided.');
       return;
     }
-    ;
 
     if (initializerFn != null) {
       initializerFn(router, new RouteViewFactory(this));

@@ -5,6 +5,7 @@ import 'package:bwu_utils_dev/grinder/default_tasks.dart'
     hide main
     show checkTask, grind;
 
+// Don't run `pub publish --dry-run
 main(args) {
   checkTask = () {};
   grind(args);

@@ -1,3 +1,9 @@
+##0.1.3
+- move examples into a sub-project
+- fix linter hints/warnings
+- changed the keys in `lib/static_keys.dart` to lower-camel-case to comply with
+  the Dart style guide. The upper-case keys will be removed eventually.
+
 ##0.1.2
 - use dartformat on all source files
 - upgrade to Polymer 0.16.0

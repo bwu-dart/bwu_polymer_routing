@@ -34,9 +34,9 @@ class BindView extends PolymerElement with DiContext, DiConsumer
       var di = inject(this, [rt.Router, RoutingHelper]);
       rt.Router router = di[rt.Router];
       _locationService = di[RoutingHelper];
-      _appInjector = new ModuleInjector([
-        new Module()..bind(RouteProvider, toValue: this)
-      ], (di[Injector] as Injector));
+      _appInjector = new ModuleInjector(
+          [new Module()..bind(RouteProvider, toValue: this)],
+          (di[Injector] as Injector));
       RouteProvider routeProvider =
           (di[Injector] as Injector).get(RouteProvider);
 

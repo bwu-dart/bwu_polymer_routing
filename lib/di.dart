@@ -11,9 +11,7 @@ import 'package:logging/logging.dart' show Logger;
 
 final _log = new Logger('bwu_polymer_routing.di');
 
-/**
- * Mixin to enable Polymer elements to serve DI requests.
- */
+// Mixin to enable Polymer elements to serve DI requests.
 class DiContext {
   di.Injector _injector;
   /// Allows direct access to the injector for instances that have
@@ -41,10 +39,8 @@ class DiContext {
   }
 }
 
-/**
- * Mixin with helper methods for DI requests in Polymer elements and
- * routing helper methods.
- */
+/// Mixin with helper methods for DI requests in Polymer elements and
+/// routing helper methods.
 class DiConsumer {
 
   /// Fires an event which is processed by parent elements that act as

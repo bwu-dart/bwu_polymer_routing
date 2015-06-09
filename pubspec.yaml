@@ -12,9 +12,7 @@ dependencies:
   route_hierarchical: '>=0.4.21 <0.7.0'
 
 dev_dependencies:
-  bwu_utils_dev: '>=0.1.0-dev.9 <0.2.0'
-#  core_elements: '>=0.1.1+2 <0.8.0'
-#  paper_elements: '>=0.1.0+2 <0.8.0'
+  bwu_utils_dev: '>=0.1.0-dev.11 <0.2.0'
   test: '>=0.12.2 <0.13.0'
 
 dependency_overrides:

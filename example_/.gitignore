@@ -2,7 +2,7 @@
 atlassian-ide-plugin.xml
 packages
 build/
-.pub/
+.pub
 pubspec.lock
 .project
 .buildlog
