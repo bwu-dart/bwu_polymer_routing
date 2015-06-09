@@ -16,7 +16,7 @@ main(args) {
               .where((p) => !p.endsWith('route_provider.dart') &&
                   !p.endsWith('routing.dart'))
               .toList());
-  checkTask = () => checkSubProjects();
+//  checkTask = () => checkSubProjects();
   grind(args);
 }
 
