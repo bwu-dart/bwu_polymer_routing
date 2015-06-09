@@ -4,6 +4,7 @@ files:
     - '**/lib/**'
     - '**/test/**'
     - '**/tool/**'
+    - '**/web/**'
   exclude:
 
 # Rule sets; ignore for now rule set inheritance and externally contributed rules
