@@ -4,9 +4,9 @@ dart:
   - stable
   - dev
 
-env:
-  - PUB=DOWNGRADE
-  - PUB=UPGRADE
+#env:
+#  - PUB=DOWNGRADE
+#  - PUB=UPGRADE
 
 script: dart -c tool/grind.dart travis
 

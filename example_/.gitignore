@@ -1,12 +1,6 @@
-.idea/
-atlassian-ide-plugin.xml
-packages
 build/
+.idea/
+packages
+.packages
 .pub
-pubspec.lock
-.project
-.buildlog
-.settings
-*.exe
-*.*~
 

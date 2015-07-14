@@ -1,7 +1,7 @@
 library bwu_polymer_routing.tool.grind;
 
-export 'package:bwu_utils_dev/grinder/default_tasks.dart'; // hide main;
-import 'package:bwu_utils_dev/grinder/default_tasks.dart'
+export 'package:bwu_grinder_tasks/bwu_grinder_tasks.dart'; // hide main;
+import 'package:bwu_grinder_tasks/bwu_grinder_tasks.dart'
     hide main
     show grind, analyzeTask, checkTask, checkSubProjects, existingSourceDirs;
 import 'package:grinder/grinder.dart' as gr;
