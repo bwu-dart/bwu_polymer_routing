@@ -17,9 +17,10 @@ with_content_shell: true
 script: dart -c tool/grind.dart travis
 
 before_install:
+  - cd example_
+  - pub upgrade
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-
 
 #branches:
 #  only:
