@@ -8,11 +8,18 @@ dart:
 #  - PUB=DOWNGRADE
 #  - PUB=UPGRADE
 
-script: dart -c tool/grind.dart travis
-
 # Speed up builds by using containerization. Disable this if you need to use
 # sudo in your scripts.
 sudo: false
+
+with_content_shell: true
+
+script: dart -c tool/grind.dart travis
+
+before_install:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
 
 #branches:
 #  only:
