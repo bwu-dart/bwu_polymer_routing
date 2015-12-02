@@ -4,7 +4,7 @@ author: Günter Zöchbauer <guenter@gzoechbauer.com>
 description: Some helper classes and components to use route_hierarchical with Polymer.dart.
 homepage: https://github.com/bwu-dart/bwu_polymer_routing
 environment:
-  sdk: '>=1.7.0 <2.0.0'
+  sdk: '>=1.8.0 <2.0.0'
 
 dependencies:
   di: '>=3.3.2 <5.0.0'
