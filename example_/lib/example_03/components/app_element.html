@@ -1,53 +1,42 @@
 <!DOCTYPE html>
-
-<link rel='import' href='../../../../packages/polymer/polymer.html'>
-<link rel='import' href='../../../../packages/bwu_polymer_routing/bind_view.html'>
-<link rel='import' href='../../../../packages/core_elements/core_scaffold.html'>
-<link rel='import' href='../../../../packages/core_elements/core_header_panel.html'>
-<link rel='import' href='../../../../packages/core_elements/core_toolbar.html'>
-<link rel='import' href='../../../../packages/core_elements/core_menu.html'>
-<link rel='import' href='../../../../packages/core_elements/core_item.html'>
-
-<link rel='import' href='view_movie.html'>
-<link rel='import' href='view_movies.html'>
-<link rel='import' href='view_overview.html'>
-<link rel='import' href='view_people.html'>
-<link rel='import' href='view_person.html'>
-
-<polymer-element name='app-element'>
+<dom-module id='app-element'>
   <template>
     <style>
       :host {
         display: block;
       }
+      paper-toolbar paper-item {
+          color: #67d4ff;
+      }
+      paper-toolbar paper-item:hover {
+          color: #d0f0ff;
+      }
 
-      core-header-panel /deep/ core-item {
-        color: #526E9C;
-      }
-      core-toolbar core-item:hover,
-      core-menu#home-menu core-item:hover {
-        color: blue;
-      }
-      #main-menu core-item#home-menu {
-        display: none;
+      paper-menu paper-item:hover {
+          color: #3f51b5;
       }
 
     </style>
-
-    <core-scaffold>
-      <core-header-panel navigation flex mode="seamed">
-        <core-toolbar><core-item  id="home" icon="home" on-click="{{overviewSelectHandler}}" label="Home"></core-item></core-toolbar>
-        <core-menu id="main-menu" theme="core-light-theme" on-core-select="{{menuSelectHandler}}">
-          <core-item id="home-menu" label="Home" route-path="overview"></core-item>
-          <core-item id="movies-menu" icon="drive-video" label="Movies" route-path="movies"></core-item> <!-- alternative icons: aspect-ratio drive-video, theaters -->
-          <core-item id="actors-menu" icon="accessibility" label="People" route-path="people"></core-item>
-        </core-menu>
-      </core-header-panel>
-      <div tool>BWU Polymer Routing - example 2 - {{selectedMenuLabel}}</div>
-      <bind-view id='app-element'></bind-view>
-    </core-scaffold>
-
-
+    <paper-drawer-panel>
+      <paper-header-panel drawer class="flex" mode="seamed">
+        <paper-toolbar class="paper-header">
+          <paper-item  id="home" on-click="overviewSelectHandler" >
+            <iron-icon icon="home"></iron-icon>Home
+          </paper-item>
+        </paper-toolbar>
+        <paper-menu id="main-menu" class="content fit" theme="core-light-theme" on-iron-select="menuSelectHandler">
+          <paper-item id="home-menu" hidden route-path="overview" label="Home">Home</paper-item>
+          <paper-item id="movies-menu" route-path="movies" label="Movies"><iron-icon icon="av:movie"></iron-icon> Movies</paper-item> <!-- alternative icons: aspect-ratio drive-video, theaters -->
+          <paper-item id="actors-menu" route-path="people" label="People"><iron-icon icon="accessibility"></iron-icon>People</paper-item>
+        </paper-menu>
+      </paper-header-panel>
+      <paper-header-panel main class="flex" mode="seamed">
+        <paper-toolbar class="paper-header"></paper-toolbar>
+        <div class="content fit">
+          <div tool>BWU Polymer Routing - example 3 - <span>[[selectedMenuLabel]]</span></div>
+          <bind-view id='app-element'></bind-view>
+        </div>
+      </paper-header-panel>
+    </paper-drawer-panel>
   </template>
-  <script type='application/dart' src='app_element.dart'></script>
-</polymer-element>
+</dom-module>

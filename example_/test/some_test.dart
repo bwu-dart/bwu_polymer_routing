@@ -5,4 +5,4 @@ import 'package:test/test.dart';
 
 // TODO(zoechi) add tests
 
-main() {}
+void main() {}

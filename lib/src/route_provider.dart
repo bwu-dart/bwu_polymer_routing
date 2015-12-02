@@ -32,7 +32,6 @@ part of bwu_polymer_routing.module;
 /// If user component is used outside of ng-view directive then
 /// injected [RouteProvider] will be null.
 abstract class RouteProvider {
-
   /// Returns [Route] for current view.
   rt.Route get route;
 

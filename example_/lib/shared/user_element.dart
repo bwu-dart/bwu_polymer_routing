@@ -1,11 +1,17 @@
+@HtmlImport('user_element.html')
 library bwu_polymer_routing_examples.shared.user_element;
 
 import 'package:polymer/polymer.dart';
-import 'package:bwu_polymer_routing/di.dart' as di;
+import 'package:web_components/web_components.dart' show HtmlImport;
 
-@CustomTag('user-element')
+import 'package:bwu_polymer_routing/di.dart' as di;
+import 'package:bwu_polymer_routing/bind_view.dart';
+
+/// Silence analyzer [BindView]
+@PolymerRegister('user-element')
 class UserElement extends PolymerElement with di.DiConsumer {
   UserElement.created() : super.created();
 
-  @published String userId;
+  @property
+  String userId;
 }

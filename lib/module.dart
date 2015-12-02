@@ -1,10 +1,10 @@
 /// Route configuration for single-page applications.
 ///
-/// The [routing] library makes it easier to build large single-page
+/// The `routing` library makes it easier to build large single-page
 /// applications. The library lets you map the browser address bar to semantic
 /// structure of your application and keeps them in sync.
 ///
-/// Angular uses the [route_hierarchical] package to define application routes
+/// Angular uses the `route_hierarchical` package to define application routes
 /// and to provide custom tools to make it easier to use routing with Angular
 /// templates.
 ///
@@ -93,16 +93,17 @@
 ///        }
 ///      }
 ///
-///  [Route.onLeave] event is triggered when the browser is routed from an
+///  [rt.Route.onLeave] event is triggered when the browser is routed from an
 ///  active route to a different route. The active route can delay and
 ///  potentially veto the navigation by passing a [Future<bool>] to
-///  [RouteEvent.allowLeave].
+///  [rt.RouteEvent.allowLeave].
 ///
-///  Notice that we create a [RouteHandle] for our route. [RouteHandle] are
-///  a convenient wrapper around [Route] that makes unsubscribing route events
-///  easier. For example, notice that we didn't need to manually call
-///  [StreamSubscription.cancel] for subscription to [Route.onLeave]. Calling
-///  [RouteHandle.discard] unsubscribes all listeners created for the handle.
+///  Notice that we create a [rt.RouteHandle] for our route. [rt.RouteHandle]
+///  are convenient wrappers around [Route] that makes unsubscribing route
+///  events easier. For example, notice that we didn't need to manually call
+///  [async.StreamSubscription.cancel] for subscription to [rt.Route.onLeave].
+///  Calling [rt.RouteHandle.discard] unsubscribes all listeners created for the
+///  handle.
 ///
 /// ## Hierarchical Routes
 ///
@@ -127,8 +128,8 @@ import 'package:di/di.dart' as di;
 import 'package:di/annotations.dart' show Injectable, Injectables;
 import 'package:route_hierarchical/client.dart' as rt;
 
-import 'static_keys.dart';
 import 'bind_view.dart';
+import 'static_keys.dart';
 //import 'bind_route.dart';
 
 part 'src/routing.dart';
@@ -142,7 +143,7 @@ class RoutingModule extends di.Module {
         toFactory: (NgRoutingUsePushState state, dom.Window window) {
       var useFragment = !state.usePushState;
       return new rt.Router(useFragment: useFragment, windowImpl: window);
-    }, inject: [PM_ROUTING_USE_PUSH_STATE_KEY, WINDOW_KEY]);
+    }, inject: [pmRoutingUsePushStateKey, windowKey]);
     bind(RoutingHelper);
     bind(RouteProvider, toValue: null);
     bind(RouteInitializerFn, toValue: null);
@@ -150,11 +151,11 @@ class RoutingModule extends di.Module {
   }
 }
 
-/// Allows configuration of [Router.useFragment]. By default [usePushState] is
-/// true, so the router will listen to [Window.onPopState] and route URLs like
+/// Allows configuration of [rt.Router.useFragment]. By default [usePushState] is
+/// true, so the router will listen to [dom.Window.onPopState] and route URLs like
 /// "http://host:port/foo/bar?baz=qux". Both the path and query parts of the URL
 /// are used by the router. If [usePushState] is false, router will listen to
-/// [Window.onHashChange] and route URLs like
+/// [dom.Window.onHashChange] and route URLs like
 /// "http://host:port/path#/foo/bar?baz=qux". Everything after hash (#) is used
 /// by the router.
 @Injectable()

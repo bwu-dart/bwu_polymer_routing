@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-
-<link rel='import' href='../../../packages/polymer/polymer.html'>
-
-<polymer-element name='article-element'>
+<dom-module id='article-element'>
   <template>
     <style>
       :host {
@@ -10,21 +7,18 @@
         border: solid 2px green;
         margin: 2px;
       }
-
       div.isEditMode {
         color: red;
       }
     </style>
-
-    <div>&lt;&nbsp;<a href="#" on-click="{{goParentRouteHandler}}">articles</a></div>
-    <div><button on-click="{{toggleEdit}}">{{isEditMode ? 'view' : 'edit'}}</button></div>
+    <div>&lt;&nbsp;<a href="#" on-click="goParentRouteHandler">articles</a></div>
+    <div><button on-click="toggleEdit">[[editModeString(isEditMode)]]</button></div>
     <p>The edit mode (view/edit) is implemented as a sub-route. The URL reflects the mode. An alternative way would be to use a route parameter for the edit mode.</p>
 
     <h3>article-element</h3>
-    <div class="{{ {'isEditMode': isEditMode} }}">isEditMode: {{isEditMode}}</div>
-    <div>articleId: {{articleId}}</div>
-    <div>userId: {{userId}}</div>
+    <div class$="[[isEditModeClass]]">isEditMode: <span>[[editModeString(isEditMode)]]</span></div>
+    <div>articleId: <span>{{articleId}}</span></div>
+    <div>userId: <span>{{userId}}</span></div>
     <content></content>
   </template>
-  <script type='application/dart' src='article_element.dart'></script>
-</polymer-element>
+</dom-module>

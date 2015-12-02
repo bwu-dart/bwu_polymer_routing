@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-
-<link rel='import' href='../../../packages/polymer/polymer.html'>
-<link rel='import' href='../../../packages/bwu_polymer_routing/bind_view.html'>
-
-<polymer-element name='user-element'>
+<dom-module id='user-element'>
   <template>
     <style>
       :host {
@@ -12,16 +8,10 @@
         margin: 2px;
       }
     </style>
-
-    <div>&lt; <a href='#' on-click="{{goPathHandler}}" route-path='usersList'>users</a></div>
-
+    <div>&lt; <a href='#' on-click="goPathHandler" route-path='usersList'>users</a></div>
     <h3>user-element</h3>
-
-    <div>{{userId}}</div>
-
+    <div>[[userId]]</div>
     <bind-view id="user_element"></bind-view>
-
     <content></content>
   </template>
-  <script type='application/dart' src='user_element.dart'></script>
-</polymer-element>
+</dom-module>

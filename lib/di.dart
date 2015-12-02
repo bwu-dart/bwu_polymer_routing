@@ -3,7 +3,7 @@ library bwu_polymer_routing.di;
 import 'dart:html' as dom;
 import 'dart:async' as async;
 import 'package:di/di.dart' as di;
-//import 'package:polymer/polymer.dart';
+import 'package:polymer/polymer.dart';
 import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
 import 'package:route_hierarchical/client.dart' as rt;
 
@@ -12,8 +12,10 @@ import 'package:logging/logging.dart' show Logger;
 final _log = new Logger('bwu_polymer_routing.di');
 
 // Mixin to enable Polymer elements to serve DI requests.
+@behavior
 class DiContext {
   di.Injector _injector;
+
   /// Allows direct access to the injector for instances that have
   /// DiContext mixing applied, without using the event method of [DiConsumer].
   di.Injector get injector => _injector;
@@ -23,12 +25,14 @@ class DiContext {
   /// [injector] is the injector to use to resolve the requested instances.
   void initDiContext(dom.Element host, di.Injector injector) {
     _injector = injector;
-
     host.on['bwu-polymer-di'].listen((dom.CustomEvent e) {
       e.preventDefault();
       e.stopImmediatePropagation();
       try {
-        e.detail.keys.where((k) => e.detail[k] == null).forEach((k) {
+        (e.detail as Map<Type, dynamic>)
+            .keys
+            .where((k) => e.detail[k] == null)
+            .forEach((k) {
           e.detail[k] = injector.get(k);
         });
       } catch (e) {
@@ -41,8 +45,8 @@ class DiContext {
 
 /// Mixin with helper methods for DI requests in Polymer elements and
 /// routing helper methods.
+@behavior
 class DiConsumer {
-
   /// Fires an event which is processed by parent elements that act as
   /// DI provider (have the `DiContext` mixin applied and initialized).
   /// [host] is the element used to fire the DI request event.
@@ -55,7 +59,7 @@ class DiConsumer {
     host.dispatchEvent(event);
 
     if (event.defaultPrevented) {
-      return event.detail;
+      return event.detail as Map<Type,dynamic>;
     } else {
       throw 'No DiContext served the request.';
     }
@@ -85,7 +89,9 @@ class DiConsumer {
     _injectRouter(host);
 
     // TODO(zoechi) appropriate error handling instead of just ignoring the missing router
-    if (_router == null) return new async.Future.value();
+    if (_router == null) {
+      return new async.Future.value();
+    }
 
     return _router.go(
         routeToPath(_routeProvider.route.parent), _routeProvider.parameters);
@@ -93,9 +99,11 @@ class DiConsumer {
 
   /// Similar to [goParentRoute] but has a method signature so it can
   /// be used as event handler for example in a Polymer binding.
-  void goParentRouteHandler(dom.Event e) {
+  @reflectable
+  void goParentRouteHandler(dom.Event e, [_]) {
     e.preventDefault();
-    goParentRoute(e.target);
+    e.stopImmediatePropagation();
+    goParentRoute(new PolymerEvent(e).rootTarget);
   }
 
   /// Navigate to the defined [routePath] and apply the passed [parameters].
@@ -105,10 +113,12 @@ class DiConsumer {
     _injectRouter(host);
     _log.finest(
         'goPath(): routePath: ${routePath}, activePath.length: ${_router.activePath.length}');
-    return _router.go(routePath, _router.activePath.isEmpty
-        ? parameters
-        : (_router.activePath[_router.activePath.length - 1].parameters
-      ..addAll(parameters)));
+    return _router.go(
+        routePath,
+        _router.activePath.isEmpty
+            ? parameters
+            : (_router.activePath[_router.activePath.length - 1].parameters
+              ..addAll(parameters)));
   }
 
   /// Navigate to the path specified by element attributes and apply parameters specified
@@ -130,18 +140,20 @@ class DiConsumer {
     });
 
     if (additionalParameters == null) additionalParameters = {};
-    return _router.go(routePath,
+    return _router.go(
+        routePath,
         _router.activePath[_router.activePath.length - 1].parameters
-      ..addAll(additionalParameters));
+          ..addAll(additionalParameters));
   }
 
   /// Similar to [goPathFromAttributes] but has a method signature so it can
   /// be used as event handler for example in a Polymer binding.
-  void goPathHandler(dom.Event e) {
+  @reflectable
+  void goPathHandler(dom.Event e, [_]) {
     e.preventDefault();
-    //if (_router == null) return;
+    e.stopImmediatePropagation();
 
-    goPathFromAttributes(e.target);
+    goPathFromAttributes(new PolymerEvent(e).rootTarget);
   }
 
   /// Returns the path of the passed [route].

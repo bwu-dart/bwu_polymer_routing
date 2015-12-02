@@ -1,6 +1,6 @@
 library bwu_polymer_routing.tool.grind;
 
-export 'package:bwu_grinder_tasks/bwu_grinder_tasks.dart'; // hide main;
+export 'package:bwu_grinder_tasks/bwu_grinder_tasks.dart' hide main;
 import 'package:bwu_grinder_tasks/bwu_grinder_tasks.dart'
     hide main
     show grind, analyzeTask, checkTask, checkSubProjects, existingSourceDirs;
@@ -9,26 +9,30 @@ import 'package:path/path.dart' as path;
 import 'dart:io';
 
 // TODO(zoechi) workaround because tuneup reports false negative
-main(args) {
-  analyzeTask =
-      () => gr.Analyzer.analyze(
-          findDartSourceFiles(coerceToPathList(existingSourceDirs))
-              .where((p) => !p.endsWith('route_provider.dart') &&
-                  !p.endsWith('routing.dart'))
-              .toList());
+void main(List<String> args) {
+  analyzeTask = () => gr.Analyzer.analyze(
+      findDartSourceFiles(coerceToPathList(existingSourceDirs))
+          .where((String p) =>
+              !p.endsWith('route_provider.dart') && !p.endsWith('routing.dart'))
+          .toList());
 //  checkTask = () => checkSubProjects();
   grind(args);
 }
 
 /// Given a [String], [File], or list of strings or files, coerce the
 /// [filesOrPaths] param into a list of strings.
-List<String> coerceToPathList(filesOrPaths) {
-  if (filesOrPaths is! Iterable) filesOrPaths = [filesOrPaths];
-  return filesOrPaths.map((item) {
+List<String> coerceToPathList(dynamic filesOrPaths) {
+  Iterable items;
+  if (filesOrPaths is Iterable) {
+    items = filesOrPaths;
+  } else {
+    items = [filesOrPaths];
+  }
+  return items.map/*<String>*/((dynamic item) {
     if (item is String) return item;
     if (item is FileSystemEntity) return item.path;
     return '${item}';
-  }).toList();
+  }).toList() as List<String>;
 }
 
 /// Takes a list of paths and if an element is a directory it expands it to

@@ -1,3 +1,7 @@
+##0.2.0
+- Upgrade to Polymer 1.0.0-rc.x
+- remove deprecated uppercase consts in `lib/static_keys.dart`
+
 ##0.1.3
 - move examples into a sub-project
 - fix linter hints/warnings

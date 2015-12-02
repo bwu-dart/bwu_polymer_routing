@@ -11,32 +11,33 @@ class RouteInitializer implements Function {
           view: 'user-list',
           defaultRoute: true,
           dontLeaveOnParamChanges: true,
-          enter: (route) => router.go('usersList', {})),
+          enter: (rt.RouteEnterEvent route) => router.go('usersList', {})),
       'user': routeCfg(
           path: '/user/:userId',
           view: 'user-element',
           dontLeaveOnParamChanges: true,
           mount: {
-        'articleList': routeCfg(
-            path: '/articles',
-            view: 'article-list',
-            defaultRoute: true,
-            dontLeaveOnParamChanges: true,
-            mount: {
-          'article': routeCfg(
-              path: '/article/:articleId',
-              view: 'article-element',
-              bindParameters: ['articleId', 'userId'],
-              dontLeaveOnParamChanges: true,
-              mount: {
-            'view': routeCfg(
-                path: '/view',
+            'articleList': routeCfg(
+                path: '/articles',
+                view: 'article-list',
                 defaultRoute: true,
-                dontLeaveOnParamChanges: true),
-            'edit': routeCfg(path: '/edit', dontLeaveOnParamChanges: true)
+                dontLeaveOnParamChanges: true,
+                mount: {
+                  'article': routeCfg(
+                      path: '/article/:articleId',
+                      view: 'article-element',
+                      bindParameters: <String>['articleId', 'userId'],
+                      dontLeaveOnParamChanges: true,
+                      mount: {
+                        'view': routeCfg(
+                            path: '/view',
+                            defaultRoute: true,
+                            dontLeaveOnParamChanges: true),
+                        'edit': routeCfg(
+                            path: '/edit', dontLeaveOnParamChanges: true)
+                      })
+                })
           })
-        })
-      })
     });
   }
 }

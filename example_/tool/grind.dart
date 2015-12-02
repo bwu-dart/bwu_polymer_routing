@@ -9,7 +9,7 @@ import 'package:bwu_grinder_tasks/bwu_grinder_tasks.dart'
 // because it requires
 // - a LICENSE file
 // - no path dependency to ..
-main(args) {
+void main(List<String> args) {
   checkTask = () {};
   grind(args);
 }

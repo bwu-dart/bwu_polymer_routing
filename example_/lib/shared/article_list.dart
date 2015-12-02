@@ -1,15 +1,22 @@
+@HtmlImport('article_list.html')
 library bwu_polymer_routing_examples.shared.article_list;
 
 import 'package:polymer/polymer.dart';
-import 'package:bwu_polymer_routing/di.dart' as di;
+import 'package:web_components/web_components.dart' show HtmlImport;
 
-@CustomTag('article-list')
+import 'package:bwu_polymer_routing/di.dart' as di;
+import 'package:bwu_polymer_routing/bind_view.dart';
+
+/// Silence analyzer [BindView]
+@PolymerRegister('article-list')
 class ArticleList extends PolymerElement with di.DiConsumer {
   ArticleList.created() : super.created();
 
-  @observable String userId;
+//  @property
+//  String userId;
 
-  var articles = [
+  @property
+  List<String> articles = <String>[
     'Soap',
     'Knife',
     'The Dark Knight Blu-Ray',

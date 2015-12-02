@@ -11,26 +11,27 @@ class RouteInitializer implements Function {
           view: 'view-overview',
           defaultRoute: true,
           dontLeaveOnParamChanges: true,
-          enter: (route) => router.go('overview', {})),
-      'movies': routeCfg(path: '/movies', // /:userId',
+          enter: (rt.RouteEnterEvent route) => router.go('overview', {})),
+      'movies': routeCfg(
+          path: '/movies', // /:userId',
           view: 'view-movies',
           dontLeaveOnParamChanges: true,
           mount: {
-        'movie': routeCfg(
-            path: '/movie/:movieId',
-            view: 'view-movie',
-            dontLeaveOnParamChanges: true)
-      }),
+            'movie': routeCfg(
+                path: '/movie/:movieId',
+                view: 'view-movie',
+                dontLeaveOnParamChanges: true)
+          }),
       'people': routeCfg(
           path: '/people',
           view: 'view-people',
           dontLeaveOnParamChanges: true,
           mount: {
-        'person': routeCfg(
-            path: '/person/:personId',
-            view: 'view-person',
-            dontLeaveOnParamChanges: true)
-      })
+            'person': routeCfg(
+                path: '/person/:personId',
+                view: 'view-person',
+                dontLeaveOnParamChanges: true)
+          })
     });
   }
 }

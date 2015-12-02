@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-
-<link rel="import" href="../../../packages/polymer/polymer.html">
-
-<polymer-element name="user-list">
+<dom-module id="user-list">
   <template>
     <style>
       :host {
@@ -11,18 +8,15 @@
         margin: 2px;
       }
     </style>
-
     <h3>user-list</h3>
-
     <ul>
-      <template repeat="{{user in users}}">
-        <li><a href="#" on-click="{{goPathHandler}}"
+      <template is="dom-repeat" items="{{users}}" as="user">
+        <li><a href="#" on-click="goPathHandler"
           route-path="user.articleList"
           route-param-name="userId"
-          route-param-value="{{user}}">{{user}}</a></li>
+          route-param-value$="[[user]]">[[user]]</a></li>
       </template>
     </ul>
     <content></content>
   </template>
-  <script type="application/dart" src="user_list.dart"></script>
-</polymer-element>
+</dom-module>

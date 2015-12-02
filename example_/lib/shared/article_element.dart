@@ -1,68 +1,63 @@
+@HtmlImport('article_element.html')
 library bwu_polymer_routing_examples.shared.article_element;
 
-import 'dart:async' as async;
 import 'package:polymer/polymer.dart';
+import 'package:web_components/web_components.dart' show HtmlImport;
+
 import 'package:bwu_polymer_routing/module.dart' show RouteProvider;
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:bwu_polymer_routing/di.dart' as di;
 
-@CustomTag('article-element')
+@PolymerRegister('article-element')
 class ArticleElement extends PolymerElement with di.DiConsumer {
   ArticleElement.created() : super.created();
 
-  @observable String articleId;
-  @observable String userId;
-  @observable bool isEditMode = false;
+  @Property(observer: 'routeChange') String articleId;
+  @Property(observer: 'routeChange') String userId;
+  @property bool isEditMode = false;
 
   rt.Router router;
   rt.Route route;
 
+  @reflectable
+  String editModeString(bool isEditMode) => isEditMode ? 'view' : 'edit';
+
+  @reflectable
+  String isEditModeClass(bool isEditMode) => isEditMode ? 'isEditMode' : '';
+
   @override
   void attached() {
     super.attached();
-    _routeChange();
+    routeChange();
   }
 
-  void articleIdChanged(old) {
-    _routeChange();
-  }
-
-  void userIdChanged(old) {
-    _routeChange();
-  }
-
-  void _routeChange() {
-    router = null;
-    route = null;
-    new async.Future(() {
-      if (router != null) {
-        // prevent repeated execution when
-        // attached, articleIdChanged, userIdChanged fire succinctly.
-        return;
-      }
+  @reflectable
+  void routeChange([rt.Route newValue, rt.Route oldValue]) {
+    debounce('routeChange', () {
       _requestDependencies();
-      isEditMode = route.findRoute('edit').isActive;
+      set('isEditMode', route.findRoute('edit').isActive);
     });
   }
 
   void _requestDependencies() {
-    var di = inject(this, [RouteProvider, rt.Router]);
-    route = (di[RouteProvider].route as rt.Route);
-    router = (di[rt.Router] as rt.Router);
+    final Map<Type,dynamic> di = inject(this, <Type>[RouteProvider, rt.Router]);
+    route = (di[RouteProvider] as RouteProvider).route;
+    router = di[rt.Router] as rt.Router;
   }
 
-  void toggleEdit(e) {
+  @reflectable
+  void toggleEdit([_, __]) {
     if (router == null) {
       _requestDependencies();
     }
     if (route.findRoute('view').isActive) {
-      router.go('${routeToPath(route)}.edit', route.parameters).then((success) {
-        if (success) isEditMode = true;
+      router.go('${routeToPath(route)}.edit', route.parameters).then((bool success) {
+        if (success) set('isEditMode', true);
       });
     } else {
       router
           .go('${routeToPath(route)}.view', route.parameters)
-          .then((success) => isEditMode = false);
+          .then((bool success) => set('isEditMode', false));
     }
   }
 }

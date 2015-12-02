@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-
-<link rel='import' href='../../packages/polymer/polymer.html'>
-
-<polymer-element name='bind-view'>
+<dom-module id='bind-view'>
   <template>
     <style>
       :host {
@@ -10,10 +7,5 @@
       }
     </style>
     <content id="content"></content>
-
-    <!-- to make binding to `parameters` for dynamically added views work -->
-    <template if="false">{{parameters}}</template>
-
   </template>
-  <script type='application/dart' src='bind_view.dart'></script>
-</polymer-element>
+</dom-module>

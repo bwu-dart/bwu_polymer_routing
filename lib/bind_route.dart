@@ -1,8 +1,10 @@
+@HtmlImport('bind_route.html')
 library bwu_polymer_routing.bind_route;
 
+import 'package:web_components/web_components.dart' show HtmlImport;
 import 'package:polymer/polymer.dart';
 
-@CustomTag('bind-route')
+@PolymerRegister('bind-route')
 class BindRoute extends PolymerElement {
   BindRoute.created() : super.created();
 
