@@ -40,4 +40,7 @@ class RouteInitializer implements Function {
           })
     });
   }
+
+  @override
+  bool operator ==(Object other) => identical(this, other);
 }

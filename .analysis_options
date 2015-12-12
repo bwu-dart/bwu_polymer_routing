@@ -1,5 +1,5 @@
 analyzer:
-  strong-mode: false
+  strong-mode: true
   language:
     enableSuperMixins: true
 linter:

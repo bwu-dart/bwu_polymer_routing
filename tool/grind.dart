@@ -29,7 +29,7 @@ List<String> coerceToPathList(dynamic filesOrPaths) {
     items = [filesOrPaths];
   }
   return items.map/*<String>*/((dynamic item) {
-    if (item is String) return item;
+    if (item is String) return item.toString();
     if (item is FileSystemEntity) return item.path;
     return '${item}';
   }).toList() as List<String>;

@@ -10,8 +10,8 @@ dependencies:
   bwu_polymer_routing:
     path: ..
   di: '>=3.3.2 <5.0.0'
-  polymer: ^1.0.0-rc.3
-  reflectable: 0.3.3
+  polymer: ^1.0.0-rc.9
+  reflectable: ^0.4.0
   route_hierarchical: '>=0.4.21 <0.7.0'
   web_components: ^0.12.0
 

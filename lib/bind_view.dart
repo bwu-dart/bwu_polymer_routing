@@ -162,7 +162,7 @@ class BindView extends PolymerElement
       var p = _viewRoute;
       while (p != null) {
         if (p.parameters != null) {
-          _parameters.addAll(p.parameters);
+          _parameters.addAll(p.parameters as Map<String,String>);
         }
         p = p.parent;
       }

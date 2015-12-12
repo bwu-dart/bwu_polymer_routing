@@ -1,5 +1,5 @@
 name: bwu_polymer_routing
-version: 0.1.3
+version: 0.2.0
 author: Günter Zöchbauer <guenter@gzoechbauer.com>
 description: Some helper classes and components to use route_hierarchical with Polymer.dart.
 homepage: https://github.com/bwu-dart/bwu_polymer_routing
@@ -8,8 +8,8 @@ environment:
 
 dependencies:
   di: '>=3.3.2 <5.0.0'
-  polymer: ^1.0.0-rc.3
-  reflectable: ^0.3.0
+  polymer: ^1.0.0-rc.9
+  reflectable: ^0.4.0
   route_hierarchical: '>=0.4.21 <0.7.0'
   web_components: ^0.12.0
 
