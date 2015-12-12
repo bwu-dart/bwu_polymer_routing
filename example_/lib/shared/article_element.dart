@@ -12,8 +12,8 @@ import 'package:bwu_polymer_routing/di.dart' as di;
 class ArticleElement extends PolymerElement with di.DiConsumer {
   ArticleElement.created() : super.created();
 
-  @Property(observer: 'routeChange') String articleId;
-  @Property(observer: 'routeChange') String userId;
+  @property String articleId;
+  @property String userId;
   @property bool isEditMode = false;
 
   rt.Router router;
