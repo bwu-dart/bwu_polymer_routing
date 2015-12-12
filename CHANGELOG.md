@@ -1,3 +1,6 @@
+##0.2.0+1
+- remove some debug code that caused an exception in the example
+
 ##0.2.0
 - Upgrade to Polymer 1.0.0-rc.x
 - remove deprecated uppercase consts in `lib/static_keys.dart`
