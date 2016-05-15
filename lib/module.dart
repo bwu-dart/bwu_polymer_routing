@@ -125,7 +125,7 @@ import 'dart:async' as async;
 import 'dart:html' as dom;
 
 import 'package:di/di.dart' as di;
-import 'package:di/annotations.dart' show Injectable, Injectables;
+import 'package:di/annotations.dart' show Injectable;
 import 'package:route_hierarchical/client.dart' as rt;
 
 import 'bind_view.dart';

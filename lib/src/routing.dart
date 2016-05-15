@@ -42,7 +42,7 @@ class RouteViewFactory {
               modulesCalled = true;
               final dynamic modules = cfg.modules();
               if (modules is async.Future) {
-                e.allowEnter((modules as async.Future).then/*<bool>*/((List<di.Module> m) {
+                e.allowEnter(modules.then/*<bool>*/((List<di.Module> m) {
                   newModules = m;
                   return true;
                 }));

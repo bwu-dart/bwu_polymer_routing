@@ -43,4 +43,7 @@ class RouteInitializer implements Function {
 
   @override
   bool operator ==(Object other) => identical(this, other);
+
+  @override
+  int get hashCode => super.hashCode;
 }

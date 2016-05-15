@@ -59,7 +59,7 @@ class DiConsumer {
     host.dispatchEvent(event);
 
     if (event.defaultPrevented) {
-      return event.detail as Map<Type,dynamic>;
+      return event.detail as Map<Type, dynamic>;
     } else {
       throw 'No DiContext served the request.';
     }

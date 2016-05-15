@@ -7,7 +7,7 @@ import 'package:web_components/web_components.dart' show HtmlImport;
 
 import 'package:route_hierarchical/client.dart' as rt;
 import 'package:bwu_polymer_routing/module.dart'
-    show RouteProvider, RoutingHelper, View, RouteHandle;
+    show RouteProvider, RoutingHelper, View;
 import 'package:polymer/polymer.dart';
 import 'package:di/di.dart' show Injector, Module, ModuleInjector;
 import 'package:bwu_polymer_routing/di.dart';
@@ -151,18 +151,21 @@ class BindView extends PolymerElement
     _view = null;
   }
 
+  @override
   rt.Route get route => _viewRoute;
 
+  @override
   String get routeName => _viewRoute.name;
 
   ObservableMap<String, String> _parameters;
+  @override
   Map<String, String> get parameters {
     if (_parameters == null) {
       _parameters = new ObservableMap<String, String>();
       var p = _viewRoute;
       while (p != null) {
         if (p.parameters != null) {
-          _parameters.addAll(p.parameters as Map<String,String>);
+          _parameters.addAll(p.parameters as Map<String, String>);
         }
         p = p.parent;
       }
@@ -215,7 +218,7 @@ class ObservableMap<K, V> implements Map<K, V> {
 
   @override
   void addAll(Map<K, V> other) {
-    final Map<K, V> oldValues = new Map<K,V>.fromIterable(other.keys,
+    final Map<K, V> oldValues = new Map<K, V>.fromIterable(other.keys,
         key: (K key) => key, value: (K key) => _map[key]);
     _map.addAll(other);
 

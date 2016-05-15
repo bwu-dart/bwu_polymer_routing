@@ -1,11 +1,24 @@
+##0.2.1-dev.1
+
+- upgrade dependencies
+  requires a `dependency_overrides` because of angular/di.dart#232
+
+  ```
+  dependency_overrides:
+    code_transformers: ^0.4.0
+  ```
+
+##0.2.0+2
+- upgrade dependencies
+
 ##0.2.0+1
 - remove some debug code that caused an exception in the example
 
 ##0.2.0
 - Upgrade to Polymer 1.0.0-rc.x
 - remove deprecated uppercase consts in `lib/static_keys.dart`
- 
-## looks like I messed up versions. 0.1.3 already depends on Polymer 1.0.0-rc.x 
+
+## looks like I messed up versions. 0.1.3 already depends on Polymer 1.0.0-rc.x
 
 ##0.1.3
 - move examples into a sub-project

@@ -9,30 +9,27 @@ environment:
 dependencies:
   bwu_polymer_routing:
     path: ..
-  di: '>=3.3.2 <5.0.0'
-  polymer: ^1.0.0-rc.9
-  reflectable: ^0.4.0
-  route_hierarchical: '>=0.4.21 <0.7.0'
+  di: ^3.3.7
+  polymer: ^1.0.0-rc.17
+  polymer_elements: ^1.0.0-rc.3
+  reflectable: ^0.5.4
+  route_hierarchical: ^0.7.0
   web_components: ^0.12.0
 
 dev_dependencies:
-  bwu_grinder_tasks: '>=0.1.0 <0.2.0'
-  grinder: '>=0.7.2 <0.9.0'
-  polymer_elements: ^1.0.0-rc.3
-  test: '>=0.12.2 <0.13.0'
+  bwu_grinder_tasks: ^0.1.1-dev
+  grinder: ^0.8.0
+  test: ^0.12.2
+
+dependency_overrides:
+  code_transformers: ^0.4.0
 
 transformers:
-- web_components:
+- polymer:
     entry_points:
     - web/example_01.html
     - web/example_02.html
     - web/example_03.html
-
-- reflectable:
-    entry_points:
-    - web/example_01.dart
-    - web/example_02.dart
-    - web/example_03.dart
 
 - di
 
